@@ -1,4 +1,4 @@
 package repository;
 
-public class NotaRepository {
+public interface NotaRepository {
 }
