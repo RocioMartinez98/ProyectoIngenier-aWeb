@@ -16,10 +16,10 @@ public class NotaController {
     @Autowired
     private NotaService notaService;
 
-    @GetMapping
+    /*@GetMapping
     public List<Nota> listar() {
         return notaService.findAllNotas();
-    }
+    }*/
 
     @GetMapping("/listar")
     public String listarNotas(Model model) {
@@ -37,7 +37,7 @@ public class NotaController {
     }
 
     @PostMapping("/nueva")
-    public String guardarNuevaPersona(@ModelAttribute Nota nota) {
+    public String guardarNuevaNota(@ModelAttribute Nota nota) {
         notaService.create(nota);
         return "redirect:/anotepad";
     }
@@ -50,7 +50,7 @@ public class NotaController {
     }
 
     @PostMapping("/editar/{id}")
-    public String actualizarPersona(@PathVariable Long id, @ModelAttribute Nota nota) {
+    public String actualizarNota(@PathVariable Long id, @ModelAttribute Nota nota) {
         notaService.update(id, nota);
         return "redirect:/anotepad";
     }
