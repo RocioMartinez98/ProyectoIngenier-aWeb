@@ -1,9 +1,9 @@
-package com.NotePad.Project.service;
+package com.notepad.project.service;
 
-import com.NotePad.Project.models.Nota;
+import com.notepad.project.models.Nota;
+import com.notepad.project.repository.NotaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.NotePad.Project.repository.NotaRepository;
 
 import java.util.List;
 
@@ -16,28 +16,28 @@ public class NotaService {
     }
 
     @Transactional
-    public List<Nota> findAllNotas(){
+    public List<Nota> findAllNotas() {
         return notaRepository.findAll();
     }
 
     @Transactional
-    public Nota findById(Long id){
+    public Nota findById(Long id) {
         return notaRepository.findById(id).orElse(null);
     }
 
     @Transactional
-    public Nota create(Nota nota){
+    public Nota create(Nota nota) {
         return notaRepository.save(nota);
     }
 
     @Transactional
-    public void delete(Long id){
+    public void delete(Long id) {
         notaRepository.deleteById(id);
     }
 
-    public Nota update(Long id, Nota nota){
+    public Nota update(Long id, Nota nota) {
         Nota notaBBDD = notaRepository.findById(id).orElse(null);
-        if(notaBBDD!=null){
+        if (notaBBDD != null) {
             notaBBDD.setTitulo(nota.getTitulo());
             notaBBDD.setTexto(nota.getTexto());
             return notaRepository.save(notaBBDD);

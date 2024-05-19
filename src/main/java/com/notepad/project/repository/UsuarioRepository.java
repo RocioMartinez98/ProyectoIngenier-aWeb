@@ -1,4 +1,4 @@
-package com.NotePad.Project.repository;
+package com.notepad.project.repository;
 
 public interface UsuarioRepository {
 
