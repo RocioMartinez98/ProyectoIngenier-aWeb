@@ -9,6 +9,7 @@ body{
 .custom-header {
     background-color: #5182BC;
     height: 45px;
+    font-family: 'Lato', sans-serif;
 }
 
 .custom-footer {
