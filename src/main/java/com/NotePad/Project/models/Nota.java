@@ -1,4 +1,4 @@
-package models;
+package com.NotePad.Project.models;
 
 import jakarta.persistence.*;
 
@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 public class Nota {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     @Column(nullable = false)
     private String titulo;
     private int tipo;
@@ -15,18 +15,18 @@ public class Nota {
 
     public Nota(){}
 
-    public Nota(long id, String titulo, int tipo, String texto) {
+    public Nota(Long id, String titulo, int tipo, String texto) {
         this.id = id;
         this.titulo = titulo;
         this.tipo = tipo;
         this.texto = texto;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

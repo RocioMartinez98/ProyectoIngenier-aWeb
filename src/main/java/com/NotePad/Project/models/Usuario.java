@@ -1,4 +1,4 @@
-package models;
+package com.NotePad.Project.models;
 
 import jakarta.persistence.*;
 
