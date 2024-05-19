@@ -15,17 +15,4 @@ spring:
   datasource:
     url: "jdbc:h2:mem:testdb"
   jpa:
-    hibernate:
-      ddl-auto: "none"
-  data:
-    rest:
-      base-path: "api/rest"
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  endpoint:
-    health:
-      roles: "USER"
-      show-details: "when-authorized"
+    defer-datasource-initialization = true

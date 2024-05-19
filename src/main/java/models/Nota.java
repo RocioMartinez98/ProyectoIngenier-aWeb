@@ -8,6 +8,7 @@ public class Nota {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @Column(nullable = false)
     private String titulo;
     private int tipo;
     private String texto;
@@ -52,4 +53,5 @@ public class Nota {
     public void setTexto(String texto) {
         this.texto = texto;
     }
+
 }
