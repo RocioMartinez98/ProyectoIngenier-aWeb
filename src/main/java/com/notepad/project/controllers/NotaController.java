@@ -36,6 +36,11 @@ public class NotaController {
         return "anotepad";
     }
 
+    @GetMapping("/funciones")
+    public String pantallaFunciones() {
+        return "funciones";
+    }
+
     @GetMapping("/listar")
     public String listarNotas(Model model) {
         List<Nota> notas = notaService.findAllNotas();
