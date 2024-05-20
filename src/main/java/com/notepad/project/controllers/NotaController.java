@@ -4,12 +4,13 @@ package com.notepad.project.controllers;
 import com.notepad.project.models.Nota;
 import com.notepad.project.service.NotaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping(path = "/anotepad")
 public class NotaController {
 
@@ -21,11 +22,25 @@ public class NotaController {
         return notaService.findAllNotas();
     }*/
 
+    @GetMapping("/header")
+    public String header() {
+        return "header";
+    }
+    @GetMapping("/footer")
+    public String footer() {
+        return "footer";
+    }
+
+    @GetMapping("/")
+    public String pantallaPrincipal() {
+        return "anotepad";
+    }
+
     @GetMapping("/listar")
     public String listarNotas(Model model) {
         List<Nota> notas = notaService.findAllNotas();
         model.addAttribute("NotasLista", notas); //key-valor
-        return "anotepad";
+        return "anotepad"; //nos retorna el archivo anotepad
     }
 
     //Crea una nota
