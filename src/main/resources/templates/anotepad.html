@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="stylesFyH.css">
+
     <script src="https://cdn.ckeditor.com/4.16.1/standard/ckeditor.js"></script>
     <style>
         #titulo::placeholder {
@@ -30,10 +31,6 @@
         .custom-dropdown-toggle:focus {
             background-color: #5182BC;
             color: white;
-        }
-
-        body {
-            background-color: ghostwhite;
         }
 
         .file-input-container {
@@ -70,9 +67,33 @@
             background-color: #5182BC;
             color: white;
         }
+        body {
+            background-color: ghostwhite;
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .custom-header {
+            background-color: #5182BC;
+            height: 45px;
+            font-family: 'Lato', sans-serif;
+        }
+        .custom-footer {
+            display: table;
+            margin-top: auto;
+            background-color: #5182BC;
+        }
+
+        .footer-icon {
+            width: 145px;
+            height: 45px;
+        }
 
     </style>
 </head>
+
 <body>
 
     <header class="navbar navbar-expand-lg custom-header">
@@ -108,15 +129,16 @@
         <div class="mb-3">
             <input class="form-control" id="titulo" placeholder="Título de la nota">
         </div>
+
         <div class="d-flex align-items-center">
             <div class="dropdown me-2">
                 <button class="btn custom-dropdown-toggle dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
                     Nota de texto sin formato
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                    <li><button class="dropdown-item" type="button">Nota de texto sin formato</button></li>
-                    <li><button class="dropdown-item" type="button">Nota de texto enriquecido</button></li>
-                    <li><button class="dropdown-item" type="button">Lista de tareas</button></li>
+                    <li><button class="dropdown-item" type="button" onclick="cambiarAreaTexto('textarea-sinFormato')">Nota de texto sin formato</button></li>
+                    <li><button class="dropdown-item" type="button" onclick="cambiarAreaTexto('textarea-conFormato')">Nota de texto enriquecido</button></li>
+                    <li><button class="dropdown-item" type="button" onclick="cambiarAreaTexto('textarea-lista')">Lista de tareas</button></li>
                 </ul>
             </div>
 
@@ -130,12 +152,42 @@
             </div>
         </div>
 
-        <div class="mb-3 mt-4">
-            <textarea id="editor"></textarea>
+        <div class="mb-3 mt-4" id='textareaContainer'>
+            <textarea id="textarea-sinFormato" class="form-control" placeholder="Contenido de la nota" style="display: block;"></textarea>
+            <textarea id="textarea-conFormato" class="form-control" style="display: none;"></textarea>
+            <textarea id="textarea-lista" class="form-control" placeholder="Agregar nueva tarea aquí" style="display: none;"></textarea>
         </div>
+
         <script>
-            CKEDITOR.replace('editor');
+            var ckeditorInstance;
+
+            function cambiarAreaTexto(selectedTextareaId) {
+                // Oculta todos los textareas
+                var textareas = document.querySelectorAll('#textareaContainer textarea');
+                textareas.forEach(function(textarea) {
+                    textarea.style.display = 'none';
+                });
+
+                // Destruye el editor CKEditor si existe
+                if (ckeditorInstance) {
+                    ckeditorInstance.destroy();
+                }
+
+                // Muestra solo el textarea correspondiente al tipo de nota seleccionado
+                var selectedTextarea = document.getElementById(selectedTextareaId);
+
+                if (selectedTextareaId === 'textarea-conFormato') {
+                    ckeditorInstance = CKEDITOR.replace(selectedTextareaId);
+                }
+
+                selectedTextarea.style.display = 'block';
+            }
+
+
         </script>
+
+
+
         <br>
         <button type="button" class="btn btn1">Agregar</button>
         <br>
