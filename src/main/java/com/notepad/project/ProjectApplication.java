@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.sql.init.SqlInitializationAutoConf
 public class ProjectApplication {
 
     public static void main(String[] args) { SpringApplication.run(ProjectApplication.class, args);
+
     }
 
 }
