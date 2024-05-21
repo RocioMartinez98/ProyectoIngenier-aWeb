@@ -53,7 +53,7 @@ public class NotaController {
     public String mostrarFormularioDeNuevaNota(Model model) {
         model.addAttribute("Nota", new Nota());
         model.addAttribute("accion", "");
-        return "funciones";
+        return "anotepad";
     }
 
     @PostMapping("/nueva")

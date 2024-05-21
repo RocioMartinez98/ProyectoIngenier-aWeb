@@ -123,10 +123,10 @@
 
     <div class="container">
 
-        <form th:object="${nota}" th:action="@{/nueva}" method="post">
+        <form th:object="${Nota}" th:action="@{/anotepad/nueva}" method="post">
             <br>
             <div class="mb-3">
-                <input class="form-control" id="titulo" name="titulo" placeholder="Título de la nota">
+                <input class="form-control" placeholder="Título de la nota">
             </div>
 
             <div class="d-flex align-items-center mb-3">
@@ -137,33 +137,28 @@
                         <option value="op3">Lista de tareas</option>
                     </select>
                 </div>
-
-                <div class="file-input-container me-2">
-                    <label for="formFile" class="custom-file-label">Insertar Word/PDF</label>
-                    <input class="form-control" type="file" id="formFile">
-                </div>
-
-                <div class="file-input-container me-2">
-                    <label for="formFile" class="custom-file-label">Cuota</label>
-                    <input class="form-control" type="file" id="formFile2">
-                </div>
-
             </div>
 
             <div class="mb-3 mt-4" id='textareaContainer'>
                 <div class="file-input-container">
-                    <textarea id="textarea-sinFormato" name="contenidoSinFormato" class="form-control textarea-hidden" style="display: none;"></textarea>
-                    <textarea id="textarea-conFormato" name="contenidoConFormato" class="form-control textarea-hidden" style="display: none;"></textarea>
-                    <textarea id="textarea-lista" name="contenidoLista" class="form-control textarea-hidden" style="display: none;"></textarea>
-
+                    <textarea id="textarea-sinFormato" class="form-control textarea-hidden" style="display: none;"></textarea>
+                    <textarea id="textarea-conFormato" class="form-control textarea-hidden" style="display: none;"></textarea>
+                    <textarea id="textarea-lista" class="form-control textarea-hidden" style="display: none;"></textarea>
                 </div>
             </div>
 
-            <button type="submit" class="btn btn-primary" id="buttonAgregar">Agregar</button>
-            <br>
-            <br>
-
+            <button type="submit" class="btn btn-primary" id="buttonAgregar">Agregar</button><br><br>
         </form>
+
+        <div class="file-input-container me-2">
+            <label for="formFile" class="custom-file-label">Insertar Word/PDF</label>
+            <input class="form-control" type="file" id="formFile">
+        </div>
+
+        <div class="file-input-container me-2">
+            <label for="formFile" class="custom-file-label">Cuota</label>
+            <input class="form-control" type="file" id="formFile2">
+        </div>
     </div>
 
         <script type="text/javascript">
