@@ -122,6 +122,8 @@
 <body>
 
     <div class="container">
+
+        <form th:object="${nota}" th:action="@{/nueva}" method="post">
             <br>
             <div class="mb-3">
                 <input class="form-control" id="titulo" name="titulo" placeholder="Título de la nota">
@@ -150,9 +152,10 @@
 
             <div class="mb-3 mt-4" id='textareaContainer'>
                 <div class="file-input-container">
-                    <textarea id="textarea-sinFormato" name="contenidoSinFormato" class="form-control" style="display: none;"></textarea>
-                    <textarea id="textarea-conFormato" name="contenidoConFormato" class="form-control" style="display: none;"></textarea>
-                    <textarea id="textarea-lista" name="contenidoLista" class="form-control" style="display: none;"></textarea>
+                    <textarea id="textarea-sinFormato" name="contenidoSinFormato" class="form-control textarea-hidden" style="display: none;"></textarea>
+                    <textarea id="textarea-conFormato" name="contenidoConFormato" class="form-control textarea-hidden" style="display: none;"></textarea>
+                    <textarea id="textarea-lista" name="contenidoLista" class="form-control textarea-hidden" style="display: none;"></textarea>
+
                 </div>
             </div>
 
