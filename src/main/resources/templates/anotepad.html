@@ -14,9 +14,11 @@
             font-weight: bold;
             color: darkgrey;
         }
-        #titulo{
+
+        #titulo {
             width: 75%;
         }
+
         #textoNota {
             font-size: larger;
             font-family: Arial, Helvetica, sans-serif;
@@ -27,6 +29,7 @@
             background-color: ghostwhite;
             color: #5182BC;
         }
+
         .custom-dropdown-toggle:hover,
         .custom-dropdown-toggle:focus {
             background-color: #5182BC;
@@ -36,6 +39,7 @@
         .file-input-container {
             position: relative;
         }
+
         .file-input-container input[type="file"] {
             position: absolute;
             opacity: 0;
@@ -43,6 +47,7 @@
             height: 100%;
             cursor: pointer;
         }
+
         .custom-file-label {
             display: inline-block;
             padding: 8px 12px;
@@ -63,10 +68,11 @@
             color: white;
         }
 
-        .btn1{
+        .btn1 {
             background-color: #5182BC;
             color: white;
         }
+
         body {
             background-color: ghostwhite;
             min-height: 100vh;
@@ -80,6 +86,7 @@
             height: 45px;
             font-family: 'Lato', sans-serif;
         }
+
         .custom-footer {
             display: table;
             margin-top: auto;
@@ -92,28 +99,28 @@
         }
 
         .footer-icon {
-        width: 145px;
-        height: 45px;
-    }
+            width: 145px;
+            height: 45px;
+        }
 
-    .custom-header {
-    background-color: #5182BC;
-    height: 45px;
-    font-family: 'Lato', sans-serif;
-    }
+        .custom-header {
+            background-color: #5182BC;
+            height: 45px;
+            font-family: 'Lato', sans-serif;
+        }
 
-    .custom-footer {
-        display: table;
-        margin-top: auto;
-        background-color: #5182BC;
-    }
+        .custom-footer {
+            display: table;
+            margin-top: auto;
+            background-color: #5182BC;
+        }
 
-    body{
-      min-height: 100vh;
-      margin: 0;
-      display: flex;
-      flex-direction: column;
-    }
+        body {
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
 
 
     </style>
@@ -121,118 +128,130 @@
 
 <body>
 
-    <div class="container">
+<div class="container">
 
-        <form th:object="${Nota}" th:action="@{/anotepad/nueva}" method="post">
-            <br>
-            <div class="mb-3">
-                <input class="form-control" placeholder="Título de la nota">
-            </div>
-
-            <div class="d-flex align-items-center mb-3">
-                <div class="dropdown me-2">
-                    <select name="tipo" id="option" class="form-select" onchange="showTextarea()">
-                        <option value="op1">Nota de texto sin formato</option>
-                        <option value="op2" selected>Nota de texto enriquecido</option>
-                        <option value="op3">Lista de tareas</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="mb-3 mt-4" id='textareaContainer'>
-                <div class="file-input-container">
-                    <textarea id="textarea-sinFormato" class="form-control textarea-hidden" style="display: none;"></textarea>
-                    <textarea id="textarea-conFormato" class="form-control textarea-hidden" style="display: none;"></textarea>
-                    <textarea id="textarea-lista" class="form-control textarea-hidden" style="display: none;"></textarea>
-                </div>
-            </div>
-
-            <button type="submit" class="btn btn-primary" id="buttonAgregar">Agregar</button><br><br>
-        </form>
-
-        <div class="file-input-container me-2">
-            <label for="formFile" class="custom-file-label">Insertar Word/PDF</label>
-            <input class="form-control" type="file" id="formFile">
+    <form th:object="${Nota}" th:action="@{/anotepad/nueva}" method="post">
+        <br>
+        <div class="mb-3">
+            <input class="form-control" placeholder="Título de la nota" th:field="*{titulo}">
         </div>
 
-        <div class="file-input-container me-2">
-            <label for="formFile" class="custom-file-label">Cuota</label>
-            <input class="form-control" type="file" id="formFile2">
+        <div class="d-flex align-items-center mb-3">
+            <div class="dropdown me-2">
+                <select name="tipo" id="option" class="form-select" onchange="showTextarea()" th:field="*{tipo}">
+                    <option value="1">Nota de texto sin formato</option>
+                    <option value="2" selected>Nota de texto enriquecido</option>
+                    <option value="3">Lista de tareas</option>
+                </select>
+            </div>
         </div>
+
+        <div class="mb-3 mt-4" id='textareaContainer'>
+            <div class="file-input-container">
+                <textarea id="textarea-sinFormato" class="form-control textarea-hidden" style="display: none;"
+                          th:field="*{texto}"></textarea>
+                <textarea id="textarea-conFormato" class="form-control textarea-hidden"
+                          style="display: none;" th:field="*{texto}"></textarea>
+                <textarea id="textarea-lista" class="form-control textarea-hidden" style="display: none;"
+                          th:field="*{texto}"></textarea>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary" id="buttonAgregar">Agregar</button>
+        <br><br>
+    </form>
+
+    <div class="file-input-container me-2">
+        <label for="formFile" class="custom-file-label">Insertar Word/PDF</label>
+        <input class="form-control" type="file" id="formFile">
     </div>
 
-        <script type="text/javascript">
-            function showTextarea() {
-                var op = document.getElementById("option").value;
+    <div class="file-input-container me-2">
+        <label for="formFile" class="custom-file-label">Cuota</label>
+        <input class="form-control" type="file" id="formFile2">
+    </div>
+</div>
 
-                // Oculta todos los textareas
-                document.getElementById("textarea-sinFormato").style.display = 'none';
-                document.getElementById("textarea-conFormato").style.display = 'none';
-                document.getElementById("textarea-lista").style.display = 'none';
+<script type="text/javascript">
+    showTextarea = () => {
+        var op = document.getElementById("option").value;
 
-                // Destruye CKEditor si estaba presente
-                if (CKEDITOR.instances['textarea-conFormato']) {
-                    CKEDITOR.instances['textarea-conFormato'].destroy(true);
-                }
+        // Oculta todos los textareas
+        document.getElementById("textarea-sinFormato").style.display = 'none';
+        document.getElementById("textarea-conFormato").style.display = 'none';
+        document.getElementById("textarea-lista").style.display = 'none';
 
-                // Muestra el textarea correspondiente si no es "nota de texto sin formato"
-                if (op == 'op1') {
-                    document.getElementById("textarea-sinFormato").style.display = 'block';
-                } else if (op == 'op2') {
-                    document.getElementById("textarea-conFormato").style.display = 'block';
-                    // Reemplaza el textarea con CKEditor si la opción es 'op2'
-                    if (!CKEDITOR.instances['textarea-conFormato']) {
-                        CKEDITOR.replace('textarea-conFormato');
-                    }
-                } else if (op == 'op3') {
-                    // Si se selecciona 'op3', muestra el textarea de la lista directamente
-                    document.getElementById("textarea-lista").style.display = 'block';
-                }
+        // Destruye CKEditor si estaba presente
+        if (CKEDITOR.instances['textarea-conFormato']) {
+            CKEDITOR.instances['textarea-conFormato'].destroy(true);
+        }
+
+        // Muestra el textarea correspondiente si no es "nota de texto sin formato"
+        if (op == '1') {
+            document.getElementById("textarea-sinFormato").style.display = 'block';
+        } else if (op == '2') {
+            document.getElementById("textarea-conFormato").style.display = 'block';
+            // Reemplaza el textarea con CKEditor si la opción es 'op2'
+            if (!CKEDITOR.instances['textarea-conFormato']) {
+                CKEDITOR.replace('textarea-conFormato');
             }
+        } else if (op == '3') {
+            // Si se selecciona 'op3', muestra el textarea de la lista directamente
+            document.getElementById("textarea-lista").style.display = 'block';
+        }
+    }
 
-            // Llama a la función showTextarea al cargar la página y al cambiar la opción
-            window.onload = showTextarea;
-            document.getElementById("option").addEventListener("change", showTextarea);
-        </script>
+    // Llama a la función showTextarea al cargar la página y al cambiar la opción
+    window.onload = showTextarea;
+    document.getElementById("option").addEventListener("change", showTextarea);
+</script>
 
 
-        <div class="container">
-        <nav class="navbar navbar-light bg-light">
-            <form class="form-inline d-flex">
-                <input class="form-control mr-sm-2" type="search" placeholder="Búsqueda" aria-label="Search">
-                <button class="btn custom-dropdown-toggle" type="submit">Búsqueda</button>
-            </form>
-        </nav>
+<div class="container">
+    <nav class="navbar navbar-light bg-light">
+        <form class="form-inline d-flex">
+            <input class="form-control mr-sm-2" type="search" placeholder="Búsqueda" aria-label="Search">
+            <button class="btn custom-dropdown-toggle" type="submit">Búsqueda</button>
+        </form>
+    </nav>
 
-        <br>
-        <a><span style="font-size: large;"><strong>Mis notas guardadas</strong></span></a>
-        <br>
-        <br>
+    <br>
+    <a><span style="font-size: large;"><strong>Mis notas guardadas</strong></span></a>
+    <br>
+    <br>
 
-        <div class="d-flex align-items-center">
-            <button class="btn custom-dropdown-toggle" type="button" id="ordenarAlfabeticamente" aria-expanded="false">Ordenar por titulo</button>
-            <button class="btn custom-dropdown-toggle" type="button" id="ordenarActualizado" aria-expanded="false">Ordenar por actualizado</button>
-        </div>
-        <br>
+    <div class="d-flex align-items-center">
+        <button class="btn custom-dropdown-toggle" type="button" id="ordenarAlfabeticamente" aria-expanded="false">
+            Ordenar por titulo
+        </button>
+        <button class="btn custom-dropdown-toggle" type="button" id="ordenarActualizado" aria-expanded="false">Ordenar
+            por actualizado
+        </button>
+    </div>
+    <br>
 
-        <div>
+    <div>
         <a href="/anotepad/listar">
-            <img th:src="@{/images/carpeta.png}" alt="todasLasNotas" style="width: 20px; height: 20px; margin-right: 5px;">
-            <button style="background-color: transparent; color: inherit; border: none;"><strong>Todas las notas</strong></button>
+            <img th:src="@{/images/carpeta.png}" alt="todasLasNotas"
+                 style="width: 20px; height: 20px; margin-right: 5px;">
+            <button style="background-color: transparent; color: inherit; border: none;"><strong>Todas las
+                notas</strong></button>
         </a><br><br>
         <a href="/anotepad/listar">
-            <img th:src="@{/images/carpeta.png}" alt="bandejaEntrada" style="width: 20px; height: 20px; margin-right: 5px;">
+            <img th:src="@{/images/carpeta.png}" alt="bandejaEntrada"
+                 style="width: 20px; height: 20px; margin-right: 5px;">
             <button style="background-color: transparent; color: inherit; border: none;">Bandeja de entrada</button>
         </a><br><br>
         <a href="https://www.freecodecamp.org/">
-            <img th:src="@{/images/carpeta2.png}" alt="adminCarpetas" style="width: 20px; height: 20px; margin-right: 5px;">
+            <img th:src="@{/images/carpeta2.png}" alt="adminCarpetas"
+                 style="width: 20px; height: 20px; margin-right: 5px;">
             <button style="background-color: transparent; color: inherit; border: none;">Administrar carpetas</button>
         </a><br><br><br>
-        </div>
-
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </div>
 </body>
 </html>

@@ -26,13 +26,16 @@ public class NotaController {
     public String header() {
         return "header";
     }
+
     @GetMapping("/footer")
     public String footer() {
         return "footer";
     }
 
-    @GetMapping("/")
-    public String pantallaPrincipal() {
+    @GetMapping
+    public String pantallaPrincipal(Model model) {
+        model.addAttribute("Nota", new Nota());
+        model.addAttribute("accion", "");
         return "anotepad";
     }
 
@@ -48,17 +51,17 @@ public class NotaController {
         return "anotepad"; //nos retorna el archivo anotepad
     }
 
-    //Crea una nota
-    @GetMapping("/nueva")
-    public String mostrarFormularioDeNuevaNota(Model model) {
-        model.addAttribute("Nota", new Nota());
-        model.addAttribute("accion", "");
-        return "anotepad";
-    }
+//    //Crea una nota
+//    @GetMapping("/nueva")
+//    public String mostrarFormularioDeNuevaNota(Model model) {
+//        model.addAttribute("Nota", new Nota());
+//        model.addAttribute("accion", "");
+//        return "anotepad";
+//    }
 
     @PostMapping("/nueva")
     public String guardarNuevaNota(@ModelAttribute Nota nota) {
-        notaService.create(nota);
+        this.notaService.create(nota);
         return "redirect:/anotepad";
     }
 
