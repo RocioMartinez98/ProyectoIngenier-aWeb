@@ -7,9 +7,7 @@ import org.springframework.boot.autoconfigure.data.rest.RepositoryRestMvcAutoCon
 @SpringBootApplication(exclude = RepositoryRestMvcAutoConfiguration.class)
 public class ProjectApplication {
 
-    public static void main(String[] args) {
+    public static void main(String[] args){
         SpringApplication.run(ProjectApplication.class, args);
-
     }
-
 }
