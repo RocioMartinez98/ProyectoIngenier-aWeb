@@ -14,6 +14,11 @@ public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService;
 
+    @GetMapping("/ajustesCuenta")
+    public String pantallaAjustesCuenta() {
+        return "ajustesCuenta";
+    }
+
     @GetMapping
     public String listar(Model model) {
         model.addAttribute("usuarios", usuarioService.findAllUsuarios());
