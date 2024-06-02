@@ -8,5 +8,6 @@ import java.util.List;
 
 @Repository
 public interface NotaRepository extends JpaRepository<Nota,Long> {
+
     List<Nota> findByTituloContainingIgnoreCase(String titulo);
 }

@@ -1,6 +1,5 @@
 package com.notepad.project.controllers;
 
-
 import com.notepad.project.models.Usuario;
 import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;

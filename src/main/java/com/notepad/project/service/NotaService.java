@@ -11,8 +11,10 @@ import java.util.List;
 
 @Service
 public class NotaService {
-    private final NotaRepository notaRepository;
+
     private static final Logger logger = LoggerFactory.getLogger(NotaService.class);
+
+    private final NotaRepository notaRepository;
 
     public NotaService(NotaRepository notaRepository) {
         this.notaRepository = notaRepository;
