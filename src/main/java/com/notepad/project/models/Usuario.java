@@ -19,7 +19,7 @@ public class Usuario {
     private String correo;
     private String clave;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private List<Nota> notas;
 
 }

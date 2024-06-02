@@ -20,4 +20,6 @@ public class Nota{
     private int tipo;
     private String texto;
 
+
+
 }
