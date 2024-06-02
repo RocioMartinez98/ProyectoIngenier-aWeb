@@ -38,6 +38,40 @@
                 height: 45px;
             }
 
+        .btn-primary {
+            background-color: #5182BC;
+            border-color: #5182BC;
+        }
+
+        .btn-primary:hover {
+            background-color: #3b6ca6;
+            border-color: #3b6ca6;
+        }
+
+        .btn-primary:focus {
+            background-color: #3b6ca6;
+            border-color: #3b6ca6;
+            box-shadow: 0 0 0 0.25rem rgba(81, 130, 188, 0.5);
+        }
+
+        .btn-primary:not(:disabled):not(.disabled):active {
+            background-color: #3b6ca6;
+            border-color: #3b6ca6;
+        }
+
+        .btn-primary:not(:disabled):not(.disabled):active:focus {
+            box-shadow: 0 0 0 0.25rem rgba(81, 130, 188, 0.5);
+        }
+
+        .btn-primary:not(:disabled):not(.disabled):active:hover {
+            background-color: #305184;
+            border-color: #305184;
+        }
+
+        .text-primary {
+            color: #5182BC !important;
+        }
+
     </style>
 </head>
 
@@ -87,45 +121,48 @@
     <div class="row">
         <div class="col-12 "><h2>Crea una cuenta</h2></div>
     </div>
+    <form th:action="@{/usuario/nuevo}" th:object="${usuario}" method="post">
     <div class="row p-1">
-        <div class="col-3  text-end"><label>Correo electr&#243;nico</label></div>
+        <div class="col-3  text-end"><label><strong>Correo electrónico</strong></label></div>
         <div class="col-5">
-            <input type="email" class=" form-control form-control-sm" name="email" id="registerEmail" placeholder="Ingrese correo electr&#243;nico" maxlength="50" />
+            <input type="email" class=" form-control form-control-sm" id="correo1" placeholder="Ingrese correo electrónico" th:field="*{correo}" required>
         </div>
     </div>
     <div class="row p-1">
-        <label for="password" class="col-3 text-end ">Contrase&#241;a</label>
+        <label for="clave" class="col-3 text-end "><strong>Contraseña</strong></label>
         <div class="col-5">
-            <input type="password" class="form-control form-control-sm" name="password" id="password" placeholder="Nueva contrase&#241;a">
+            <input type="password" class="form-control form-control-sm" id="clave1" placeholder="Nueva contraseña" th:field="*{clave}" required>
         </div>
     </div>
     <div class="row p-1">
         <div class="col-md-3"></div>
         <div class=" col-md-5">
-            <button type="submit" name="submit" id="submit" class="btn btn-primary">Crea una cuenta</button>
+            <button type="submit" name="submit" id="submit1" class="btn btn-primary">Crea una cuenta</button>
         </div>
     </div>
+    </form>
 
     <div class="row">
         <div class="col-12"> <h2>Acceso</h2> </div>
     </div>
+    <form th:action="@{/usuario/login}" method="post">
     <div class="row p-1">
-        <div class="col-3  text-end"><label for="loginMail">Correo electr&#243;nico</label></div>
+        <div class="col-3  text-end"><label for="correo"><strong>Correo electrónico</strong></label></div>
         <div class="col-5">
-            <input type="email" class=" form-control form-control-sm" name="email" id="loginMail" placeholder="Ingrese correo electr&#243;nico" maxlength="50" />
+            <input type="email" class=" form-control form-control-sm" name="correo" id="correo" placeholder="Ingrese correo electrónico" maxlength="50" />
         </div>
     </div>
     <div class="row p-1">
-        <label for="password" class="col-3 text-end ">Contrase&#241;a</label>
+        <label for="clave" class="col-3 text-end "><strong>Contraseña</strong></label>
         <div class="col-5">
-            <input type="password" class="form-control form-control-sm" name="password" id="password" placeholder="Introducir la contrase&#241;a">
+            <input type="password" class="form-control form-control-sm" name="clave" id="clave" placeholder="Introducir la contraseña">
         </div>
     </div>
     <div class="row p-1">
         <div class="col-3"></div>
         <div class="col-5">
             <div class="checkbox">
-                <label><input type="checkbox" name="recuerdame" checked="checked" /> Recu&#233;rdame</label>
+                <label><input type="checkbox" name="recuerdame" checked="checked" /> Recuédame</label>
             </div>
         </div>
     </div>
@@ -136,6 +173,7 @@
             <a href="/restablecerContrasena">&#191;Se te olvid&#243; tu contrase&#241;a?</a>
         </div>
     </div>
+    </form>
 
     <div class="row p-4"></div>
 

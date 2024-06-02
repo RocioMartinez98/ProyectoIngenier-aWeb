@@ -19,6 +19,11 @@ public class UsuarioController {
         return "ajustesCuenta";
     }
 
+    @GetMapping("/crearCuenta")
+    public String crearCuenta() {
+        return "crearCuenta";
+    }
+
     @GetMapping
     public String listar(Model model) {
         model.addAttribute("usuarios", usuarioService.findAllUsuarios());
@@ -73,6 +78,7 @@ public class UsuarioController {
             return "login";
         }
     }
+
 
 
 }
