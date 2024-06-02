@@ -2,6 +2,8 @@ package com.notepad.project.service;
 
 import com.notepad.project.models.Nota;
 import com.notepad.project.repository.NotaRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -9,6 +11,9 @@ import java.util.List;
 
 @Service
 public class NotaService {
+
+    private static final Logger logger = LoggerFactory.getLogger(NotaService.class);
+
     private final NotaRepository notaRepository;
 
     public NotaService(NotaRepository notaRepository) {
@@ -23,6 +28,12 @@ public class NotaService {
     @Transactional
     public Nota findById(Long id) {
         return notaRepository.findById(id).orElse(null);
+    }
+
+    @Transactional
+    public List<Nota> findByTitulo(String titulo) {
+        logger.info("Búsqueda por título: {}", titulo); // Verificar la búsqueda realizada
+        return notaRepository.findByTituloContainingIgnoreCase(titulo);
     }
 
     @Transactional

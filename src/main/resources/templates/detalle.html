@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Encabezado y estilos -->
+</head>
+<body>
+<!-- Contenido de la página -->
+<div class="container">
+    <h1>Detalles de la Nota</h1>
+    <div>
+        <strong>Título:</strong> <span th:text="${nota.titulo}"></span><br>
+        <strong>Contenido:</strong> <span th:text="${nota.texto}"></span><br>
+        <!-- Agrega más detalles según sea necesario -->
+    </div>
+</div>
+</body>
+</html>

@@ -1,10 +1,219 @@
-<!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Todas las notas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <script src="https://cdn.ckeditor.com/4.16.1/standard/ckeditor.js"></script>
+    <style>
+        #titulo::placeholder {
+            font-size: larger;
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: bold;
+            color: darkgrey;
+        }
+
+        #titulo {
+            width: 75%;
+        }
+
+        #textoNota {
+            font-size: larger;
+            font-family: Arial, Helvetica, sans-serif;
+            color: darkgrey;
+        }
+
+        .custom-dropdown-toggle {
+            background-color: ghostwhite;
+            color: #5182BC;
+        }
+
+        .custom-dropdown-toggle:hover,
+        .custom-dropdown-toggle:focus {
+            background-color: #5182BC;
+            color: white;
+        }
+
+        .file-input-container {
+            position: relative;
+        }
+
+        .file-input-container input[type="file"] {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .custom-file-label {
+            display: inline-block;
+            padding: 8px 12px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+            cursor: pointer;
+            color: #5182BC;
+        }
+
+        .file-input-container-toggle {
+            background-color: ghostwhite;
+            color: #5182BC;
+        }
+
+        .custom-file-label:hover,
+        .custom-file-label:focus {
+            background-color: #5182BC;
+            color: white;
+        }
+
+        .btn1 {
+            background-color: #5182BC;
+            color: white;
+        }
+
+        body {
+            background-color: ghostwhite;
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .custom-header {
+            background-color: #5182BC;
+            height: 45px;
+            font-family: 'Lato', sans-serif;
+        }
+
+        .custom-footer {
+            display: table;
+            margin-top: auto;
+            background-color: #5182BC;
+        }
+
+        .footer-icon {
+            width: 145px;
+            height: 45px;
+        }
+
+        .footer-icon {
+            width: 145px;
+            height: 45px;
+        }
+
+        .custom-header {
+            background-color: #5182BC;
+            height: 45px;
+            font-family: 'Lato', sans-serif;
+        }
+
+        .custom-footer {
+            display: table;
+            margin-top: auto;
+            background-color: #5182BC;
+        }
+
+        body {
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
 </head>
+
+<header class="navbar navbar-expand-lg custom-header">
+    <div class="container">
+        <a class="navbar-brand text-white" href="/anotepad">
+            <img th:src="@{/images/icono.jpg}" alt="Icono" style="width: 40px; margin-right: 10px;">
+            <b>aNotepad - Libreta en línea gratis</b>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="/anotepad/funciones">Funciones</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="#">Registro/Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="#">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-globe2" viewBox="0 0 16 16">
+                            <path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m7.5-6.923c-.67.204-1.335.82-1.887 1.855q-.215.403-.395.872c.705.157 1.472.257 2.282.287zM4.249 3.539q.214-.577.481-1.078a7 7 0 0 1 .597-.933A7 7 0 0 0 3.051 3.05q.544.277 1.198.49zM3.509 7.5c.036-1.07.188-2.087.436-3.008a9 9 0 0 1-1.565-.667A6.96 6.96 0 0 0 1.018 7.5zm1.4-2.741a12.3 12.3 0 0 0-.4 2.741H7.5V5.091c-.91-.03-1.783-.145-2.591-.332M8.5 5.09V7.5h2.99a12.3 12.3 0 0 0-.399-2.741c-.808.187-1.681.301-2.591.332zM4.51 8.5c.035.987.176 1.914.399 2.741A13.6 13.6 0 0 1 7.5 10.91V8.5zm3.99 0v2.409c.91.03 1.783.145 2.591.332.223-.827.364-1.754.4-2.741zm-3.282 3.696q.18.469.395.872c.552 1.035 1.218 1.65 1.887 1.855V11.91c-.81.03-1.577.13-2.282.287zm.11 2.276a7 7 0 0 1-.598-.933 9 9 0 0 1-.481-1.079 8.4 8.4 0 0 0-1.198.49 7 7 0 0 0 2.276 1.522zm-1.383-2.964A13.4 13.4 0 0 1 3.508 8.5h-2.49a6.96 6.96 0 0 0 1.362 3.675c.47-.258.995-.482 1.565-.667m6.728 2.964a7 7 0 0 0 2.275-1.521 8.4 8.4 0 0 0-1.197-.49 9 9 0 0 1-.481 1.078 7 7 0 0 1-.597.933M8.5 11.909v3.014c.67-.204 1.335-.82 1.887-1.855q.216-.403.395-.872A12.6 12.6 0 0 0 8.5 11.91zm3.555-.401c.57.185 1.095.409 1.565.667A6.96 6.96 0 0 0 14.982 8.5h-2.49a13.4 13.4 0 0 1-.437 3.008M14.982 7.5a6.96 6.96 0 0 0-1.362-3.675c-.47.258-.995.482-1.565.667.248.92.4 1.938.437 3.008zM11.27 2.461q.266.502.482 1.078a8.4 8.4 0 0 0 1.196-.49 7 7 0 0 0-2.275-1.52c.218.283.418.597.597.932m-.488 1.343a8 8 0 0 0-.395-.872C9.835 1.897 9.17 1.282 8.5 1.077V4.09c.81-.03 1.577-.13 2.282-.287z"/>
+                        </svg>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</header>
+
 <body>
+
+<div class="container">
+    <br>
+    <nav class="navbar navbar-light bg-light">
+        <form action="#" th:action="@{/anotepad/listar}" method="get" class="d-flex">
+            <input class="form-control" type="search" placeholder="Buscar por título" aria-label="Buscar" name="titulo" id="titulo">
+            <button class="btn btn-primary" type="submit">Buscar</button>
+        </form>
+    </nav>
+
+    <div th:if="${NotasLista.isEmpty()}">
+        <br><h6>No se encontró ningún resultado. Por favor, prueba de nuevo.</h6><br>
+    </div>
+    <div th:unless="${NotasLista.isEmpty()}">
+        <table class="table">
+            <tbody>
+            <tr th:each="nota : ${NotasLista}">
+                <td th:text="${nota.id}"></td>
+                <td th:text="${nota.titulo}"></td>
+                <td th:text="${nota.texto}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<footer class="custom-footer text-light text-center py-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <a href="https://apps.apple.com/us/app/a-notepad-take-share-notes/id1494609935"><img th:src="@{/images/iconoApple.png}" class="footer-icon"></a>
+                <a href="https://play.google.com/store/apps/details?id=com.anotepad.android&pli=1"><img th:src="@{/images/iconoPstore.png}" class="footer-icon"></a>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-12">
+                <p class="text-white">© 2009-2024 aNotepad.com</p>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-12">
+                <a href="/anotepad/acercaDe" class="text-light me-2">Acerca de</a> |
+                <a href="/anotepad/intimidad" class="text-light me-2">Intimidad</a> |
+                <a href="/anotepad/funciones" class="text-light me-2">Funciones</a> |
+                <a href="#" class="text-light me-2">Constructor de currículums</a> |
+                <a href="#" class="text-light me-2">Fax gratuito</a> |
+                <a href="/anotepad/reportarAbuso" class="text-light">Reportar abuso</a>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-12">
+                <p class="text-white">aNotepad.com es su bloc de notas en línea de todos los días. Puede tomar notas y compartir notas en línea sin tener que iniciar sesión.</p>
+                <p class="text-white">Puede utilizar un editor de texto enriquecido y descargar su nota como documento PDF o Word.</p>
+                <p class="text-white">Lo mejor de todo: un Bloc de notas es un bloc de notas en línea rápido, limpio y fácil de usar.</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script th:inline="javascript">
+    console.log([[${NotasLista}]]); // Verificar los resultados de la búsqueda
+</script>
 
 </body>
 </html>

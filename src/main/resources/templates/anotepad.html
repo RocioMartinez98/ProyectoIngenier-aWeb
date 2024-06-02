@@ -172,6 +172,17 @@
                     <option value="3">Lista de tareas</option>
                 </select>
             </div>
+
+            <div class="file-input-container me-2">
+                <label for="formFile" class="custom-file-label">Insertar Word/PDF</label>
+                <input class="form-control" type="file" id="formFile">
+            </div>
+
+            <div class="file-input-container me-2">
+                <label for="formFile" class="custom-file-label">Cuota</label>
+                <input class="form-control" type="file" id="formFile2">
+            </div>
+
         </div>
 
         <div class="mb-3 mt-4" id='textareaContainer'>
@@ -188,16 +199,6 @@
         <button type="submit" class="btn btn-primary" id="buttonAgregar">Agregar</button>
         <br><br>
     </form>
-
-    <div class="file-input-container me-2">
-        <label for="formFile" class="custom-file-label">Insertar Word/PDF</label>
-        <input class="form-control" type="file" id="formFile">
-    </div>
-
-    <div class="file-input-container me-2">
-        <label for="formFile" class="custom-file-label">Cuota</label>
-        <input class="form-control" type="file" id="formFile2">
-    </div>
 </div>
 
 <script type="text/javascript">
@@ -235,11 +236,11 @@
 </script>
 
 
-<div class="container">
+<nav class="container">
     <nav class="navbar navbar-light bg-light">
-        <form class="form-inline d-flex">
-            <input class="form-control mr-sm-2" type="search" placeholder="Búsqueda" aria-label="Search">
-            <button class="btn custom-dropdown-toggle" type="submit">Búsqueda</button>
+        <form th:action="@{/anotepad/listar}" method="get" class="d-flex">
+            <input class="form-control" type="search" placeholder="Buscar por título" aria-label="Buscar" name="titulo" id="titulo">
+            <button class="btn btn-primary" type="submit">Buscar</button>
         </form>
     </nav>
 
@@ -270,13 +271,22 @@
                  style="width: 20px; height: 20px; margin-right: 5px;">
             <button style="background-color: transparent; color: inherit; border: none;">Bandeja de entrada</button>
         </a><br><br>
+
         <a href="https://www.freecodecamp.org/">
             <img th:src="@{/images/carpeta2.png}" alt="adminCarpetas"
                  style="width: 20px; height: 20px; margin-right: 5px;">
             <button style="background-color: transparent; color: inherit; border: none;">Administrar carpetas</button>
         </a><br><br><br>
-    </div>
 
+        <div th:each="nota : ${notasLista}">
+            <a th:href="@{/anotepad/detalle/{id}(id=${nota.id})}">
+                <img th:src="@{/images/carpeta.png}" alt="notaImagen"
+                     style="width: 20px; height: 20px; margin-right: 5px;">
+                <button style="background-color: transparent; color: inherit; border: none;" th:text="${nota.titulo}"></button>
+            </a><br><br>
+        </div>
+    </div>
+</nav>
 </div>
 
 <footer class="custom-footer text-light text-center py-4">
