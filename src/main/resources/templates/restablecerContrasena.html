@@ -2,11 +2,9 @@
 <html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Crear Cuenta</title>
+    <title>Restablecer Contraseña</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <!-- Google Icon -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
     <style>
         .info-box {
             border-radius: 15px;
@@ -37,40 +35,9 @@
         .footer-icon {
                 width: 145px;
                 height: 45px;
-            }
-
-        .btn-primary {
-            background-color: #5182BC;
-            border-color: #5182BC;
-        }
-
-        .btn-primary:hover {
-            background-color: #3b6ca6;
-            border-color: #3b6ca6;
-        }
-
-        .btn-primary:focus {
-            background-color: #3b6ca6;
-            border-color: #3b6ca6;
-            box-shadow: 0 0 0 0.25rem rgba(81, 130, 188, 0.5);
-        }
-
-        .btn-primary:not(:disabled):not(.disabled):active {
-            background-color: #3b6ca6;
-            border-color: #3b6ca6;
-        }
-
-        .btn-primary:not(:disabled):not(.disabled):active:focus {
-            box-shadow: 0 0 0 0.25rem rgba(81, 130, 188, 0.5);
-        }
-
-        .btn-primary:not(:disabled):not(.disabled):active:hover {
-            background-color: #305184;
-            border-color: #305184;
-        }
-
-        .text-primary {
-            color: #5182BC !important;
+         }
+        .alert {
+            display: none;
         }
 
     </style>
@@ -108,90 +75,41 @@
 </header>
 
 <div class="container mt-5">
-    <p>Para acceder a sus notas desde cualquier lugar y nunca perderlas, simplemente cree una cuenta (le llevar&#225; menos de un minuto). Si ya tiene una cuenta, puede iniciar sesi&#243;n a continuaci&#243;n.</p>
-    <div class="row">
-        <div class="col-12"> <h2>Google Acceso</h2> </div>
-    </div>
-    <div class="row p-1">
-        <div class="col-sm-3"></div>
-        <div class="col-5">
-            <a href="URL_DE_AUTENTICACIÓN_DE_GOOGLE" class="btn btn-outline-dark btn-lg btn-block">
-                <img src="https://img.icons8.com/color/16/000000/google-logo.png"/>Iniciar sesi&#243;n con Google
-            </a> </div>
-    </div>
-    <div class="row">
-        <div class="col-12 "><h2>Crea una cuenta</h2></div>
-    </div>
-    <form th:action="@{/usuario/nuevo}" th:object="${usuario}" method="post">
-        <div class="row p-1">
-            <div class="col-3 text-end">
-                <label for="correo1"><strong>Correo electrónico</strong></label>
+    <div class="alert alert-success" role="alert" id="alertMessage">Se le ha enviado un correo electr&#243;nico con instrucciones sobre c&#243;mo restablecer su contrase&#241;a.</div>
+        <form id="emailForm">
+            <div class="row p-3">
+                <div class="col-12 "> <h2>Restablecer la contrase&#241;a</h2> </div>
             </div>
-            <div class="col-5">
-                <input type="email" class="form-control form-control-sm" id="correo1" placeholder="Ingrese correo electrónico" th:field="*{correo}" required>
-            </div>
-        </div>
 
-        <div class="row p-1">
-            <label for="clave1" class="col-3 text-end"><strong>Contraseña</strong></label>
-            <div class="col-5">
-                <input type="password" class="form-control form-control-sm" id="clave1" placeholder="Nueva contraseña" th:field="*{clave}" required>
-            </div>
-        </div>
-
-        <div class="row p-1">
-            <div class="col-3"></div>
-            <div class="col-5">
-                <button type="submit" name="submit" id="submit1" class="btn btn-primary">Crea una cuenta</button>
-            </div>
-        </div>
-    </form>
-
-    <div class="row">
-        <div class="col-12"> <h2>Acceso</h2> </div>
-    </div>
-
-    <form th:action="@{/usuario/cuenta}" method="post">
-        <div class="row p-1">
-            <div class="col-3 text-end">
-                <label for="correo"><strong>Correo electrónico</strong></label>
-            </div>
-            <div class="col-5">
-                <input type="email" class="form-control form-control-sm" name="correo" id="correo" placeholder="Ingrese correo electrónico" maxlength="50" required>
-            </div>
-        </div>
-
-        <div class="row p-1">
-            <label for="clave" class="col-3 text-end"><strong>Contraseña</strong></label>
-            <div class="col-5">
-                <input type="password" class="form-control form-control-sm" name="clave" id="clave" placeholder="Introducir la contraseña" required>
-            </div>
-        </div>
-
-        <div class="row p-1">
-            <div class="col-3"></div>
-            <div class="col-5">
-                <div class="form-check">
-                    <input type="checkbox" class="form-check-input" name="recuerdame" id="recuerdame" checked>
-                    <label class="form-check-label" for="recuerdame">Recuérdame</label>
+            <div class="row p-2">
+                <div class="col-3  text-end"><label>Correo electr&#243;nico</label></div>
+                <div class="col-5">
+                    <input type="email" class=" form-control form-control-sm" name="email" id="email" placeholder="Ingrese correo electr&#243;nico" maxlength="50" required/>
                 </div>
             </div>
-        </div>
 
-        <div class="row p-1">
-            <div class="col-3"></div>
-            <div class="col-5">
-                <button type="submit" name="submit" id="submit" class="btn btn-primary">Acceso</button>
-                <a href="">¿Se te olvidó tu contraseña?</a>
+            <div class="row p-2">
+                <div class="col-md-3"></div>
+                <div class=" col-md-5">
+                    <input type="submit" name="submit" id="submit" class="btn btn-primary" value="Restablecer la contrase&#241;a" /> &nbsp;
+                    <a href="/crearCuenta">Atr&#225;s para iniciar sesi&#243;n</a>
+                </div>
             </div>
-        </div>
-        <p th:if="${error}" class="text-danger" th:text="${error}"></p>
-    </form>
-
-    <div class="row p-4"></div>
-
+        </form>
+        <div class="row p-4"></div>
 
 </div>
+
+<script>
+    document.getElementById('emailForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        var email = document.getElementById('email').value;
+        if (email) {
+            var alertMessage = document.getElementById('alertMessage');
+            alertMessage.style.display = 'block';
+        }
+    });
+</script>
 
 <footer class="custom-footer text-light text-center py-4">
     <div class="container">
