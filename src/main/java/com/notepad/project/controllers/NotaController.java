@@ -22,6 +22,11 @@ public class NotaController {
     @Autowired
     private NotaService notaService;
 
+    @GetMapping("/notaSeleccionada")
+    public String pantallanotaSeleccionada() {
+        return "notaSeleccionada";
+    }
+
     @GetMapping("/header")
     public String header() {
         return "header";
@@ -111,16 +116,25 @@ public class NotaController {
     }
 
     @GetMapping("/editar/{id}")
-    public String mostrarFormularioEditarNota(@PathVariable Long id, @ModelAttribute Nota nota, Model model) {
-        model.addAttribute("nota", nota);
-        model.addAttribute("accion", "/nota/editar/" + id);
-        return "anotepad";
+    public String mostrarFormularioEditarNota(@PathVariable Long id, @ModelAttribute Nota nota, Model model, HttpSession session) {
+        Usuario usuarioAutenticado = (Usuario) session.getAttribute("usuarioAutenticado");
+        if (usuarioAutenticado != null) {
+            model.addAttribute("nota", nota);
+            model.addAttribute("accion", "/anotepad/editar/" + id);
+            return "ejemploEditarNota";
+        } else {
+            return "redirect:/usuario/login"; // Redirigir al login si no hay usuario autenticado
+        }
     }
-
     @PostMapping("/editar/{id}")
-    public String actualizarNota(@PathVariable Long id, @ModelAttribute Nota nota) {
-        notaService.update(id, nota);
-        return "redirect:/anotepad";
+    public String actualizarNota(@PathVariable Long id, @ModelAttribute Nota nota, HttpSession session) {
+        Usuario usuarioAutenticado = (Usuario) session.getAttribute("usuarioAutenticado");
+        if (usuarioAutenticado != null) {
+            notaService.update(id, nota);
+            return "redirect:/anotepad/notasDeUsuario";
+        } else {
+            return "redirect:/usuario/login"; // Redirigir al login si no hay usuario autenticado
+        }
     }
 
     @GetMapping("/eliminar/{id}")
@@ -140,5 +154,6 @@ public class NotaController {
             return "redirect:/usuario/login"; // Redirigir al login si no hay usuario autenticado
         }
     }
+
 
 }

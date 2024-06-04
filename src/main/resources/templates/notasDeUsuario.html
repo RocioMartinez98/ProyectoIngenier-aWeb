@@ -165,8 +165,12 @@
             <td th:text="${nota.id}"></td>
             <td th:text="${nota.titulo}"></td>
             <td th:text="${nota.texto}"></td>
+            <td>
+                <a th:href="@{/anotepad/editar/{id}(id=${nota.id})}" class="btn btn-primary">Editar</a>
+            </td>
         </tr>
         </tbody>
+
     </table>
 </div>
     <footer class="custom-footer text-light text-center py-4">
