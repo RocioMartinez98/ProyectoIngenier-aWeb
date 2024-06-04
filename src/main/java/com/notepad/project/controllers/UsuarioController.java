@@ -19,11 +19,6 @@ public class UsuarioController {
         return "ajustesCuenta";
     }
 
-    @GetMapping("/crearCuenta")
-    public String crearCuenta() {
-        return "crearCuenta";
-    }
-
     @GetMapping
     public String listar(Model model) {
         model.addAttribute("usuarios", usuarioService.findAllUsuarios());
@@ -78,6 +73,26 @@ public class UsuarioController {
             return "login";
         }
     }
+
+    @GetMapping("/cuenta")
+    public String cuenta(Model model, HttpSession session) {
+        model.addAttribute("usuario", new Usuario());
+        session.setAttribute("usuarioAutenticado", null); // Limpiar la sesión
+        return "crearCuenta";
+    }
+
+    @PostMapping("/cuenta")
+    public String cuenta(@RequestParam String correo, @RequestParam String clave, Model model, HttpSession session) {
+        Usuario usuario = usuarioService.findByCorreoAndClave(correo, clave);
+        if (usuario != null) {
+            session.setAttribute("usuarioAutenticado", usuario);
+            return "redirect:/anotepad/notasDeUsuario";
+        } else {
+            model.addAttribute("error", "Usuario o contraseña incorrectos");
+            return "crearCuenta";
+        }
+    }
+
 
 
 

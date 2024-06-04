@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Crear Cuenta</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <!-- Google Icon -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
@@ -113,7 +114,7 @@
     </div>
     <div class="row p-1">
         <div class="col-sm-3"></div>
-        <div class="col-9">
+        <div class="col-5">
             <a href="URL_DE_AUTENTICACIÓN_DE_GOOGLE" class="btn btn-outline-dark btn-lg btn-block">
                 <img src="https://img.icons8.com/color/16/000000/google-logo.png"/> Acceder con Google
             </a> </div>
@@ -122,57 +123,69 @@
         <div class="col-12 "><h2>Crea una cuenta</h2></div>
     </div>
     <form th:action="@{/usuario/nuevo}" th:object="${usuario}" method="post">
-    <div class="row p-1">
-        <div class="col-3  text-end"><label><strong>Correo electrónico</strong></label></div>
-        <div class="col-5">
-            <input type="email" class=" form-control form-control-sm" id="correo1" placeholder="Ingrese correo electrónico" th:field="*{correo}" required>
+        <div class="row p-1">
+            <div class="col-3 text-end">
+                <label for="correo1"><strong>Correo electrónico</strong></label>
+            </div>
+            <div class="col-5">
+                <input type="email" class="form-control form-control-sm" id="correo1" placeholder="Ingrese correo electrónico" th:field="*{correo}" required>
+            </div>
         </div>
-    </div>
-    <div class="row p-1">
-        <label for="clave" class="col-3 text-end "><strong>Contraseña</strong></label>
-        <div class="col-5">
-            <input type="password" class="form-control form-control-sm" id="clave1" placeholder="Nueva contraseña" th:field="*{clave}" required>
+
+        <div class="row p-1">
+            <label for="clave1" class="col-3 text-end"><strong>Contraseña</strong></label>
+            <div class="col-5">
+                <input type="password" class="form-control form-control-sm" id="clave1" placeholder="Nueva contraseña" th:field="*{clave}" required>
+            </div>
         </div>
-    </div>
-    <div class="row p-1">
-        <div class="col-md-3"></div>
-        <div class=" col-md-5">
-            <button type="submit" name="submit" id="submit1" class="btn btn-primary">Crea una cuenta</button>
+
+        <div class="row p-1">
+            <div class="col-3"></div>
+            <div class="col-5">
+                <button type="submit" name="submit" id="submit1" class="btn btn-primary">Crea una cuenta</button>
+            </div>
         </div>
-    </div>
     </form>
 
     <div class="row">
         <div class="col-12"> <h2>Acceso</h2> </div>
     </div>
-    <form th:action="@{/usuario/login}" method="post">
-    <div class="row p-1">
-        <div class="col-3  text-end"><label for="correo"><strong>Correo electrónico</strong></label></div>
-        <div class="col-5">
-            <input type="email" class=" form-control form-control-sm" name="correo" id="correo" placeholder="Ingrese correo electrónico" maxlength="50" />
-        </div>
-    </div>
-    <div class="row p-1">
-        <label for="clave" class="col-3 text-end "><strong>Contraseña</strong></label>
-        <div class="col-5">
-            <input type="password" class="form-control form-control-sm" name="clave" id="clave" placeholder="Introducir la contraseña">
-        </div>
-    </div>
-    <div class="row p-1">
-        <div class="col-3"></div>
-        <div class="col-5">
-            <div class="checkbox">
-                <label><input type="checkbox" name="recuerdame" checked="checked" /> Recuédame</label>
+
+    <form th:action="@{/usuario/cuenta}" method="post">
+        <div class="row p-1">
+            <div class="col-3 text-end">
+                <label for="correo"><strong>Correo electrónico</strong></label>
+            </div>
+            <div class="col-5">
+                <input type="email" class="form-control form-control-sm" name="correo" id="correo" placeholder="Ingrese correo electrónico" maxlength="50" required>
             </div>
         </div>
-    </div>
-    <div class="row p-1">
-        <div class="col-3"></div>
-        <div class="col-5">
-            <button type="submit" name="submit" id="submit" class="btn btn-primary">Acceso</button> &nbsp;
-            <a href="/restablecerContrasena">&#191;Se te olvid&#243; tu contrase&#241;a?</a>
+
+        <div class="row p-1">
+            <label for="clave" class="col-3 text-end"><strong>Contraseña</strong></label>
+            <div class="col-5">
+                <input type="password" class="form-control form-control-sm" name="clave" id="clave" placeholder="Introducir la contraseña" required>
+            </div>
         </div>
-    </div>
+
+        <div class="row p-1">
+            <div class="col-3"></div>
+            <div class="col-5">
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" name="recuerdame" id="recuerdame" checked>
+                    <label class="form-check-label" for="recuerdame">Recuérdame</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="row p-1">
+            <div class="col-3"></div>
+            <div class="col-5">
+                <button type="submit" name="submit" id="submit" class="btn btn-primary">Acceso</button>
+                <a href="">¿Se te olvidó tu contraseña?</a>
+            </div>
+        </div>
+        <p th:if="${error}" class="text-danger" th:text="${error}"></p>
     </form>
 
     <div class="row p-4"></div>
