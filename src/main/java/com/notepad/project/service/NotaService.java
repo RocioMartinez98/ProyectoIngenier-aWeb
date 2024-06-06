@@ -20,6 +20,8 @@ public class NotaService {
         this.notaRepository = notaRepository;
     }
 
+
+
     @Transactional
     public List<Nota> findAllNotas() {
         return notaRepository.findAll();

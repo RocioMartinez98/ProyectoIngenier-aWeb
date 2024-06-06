@@ -49,7 +49,11 @@ public class UsuarioService{
 
     @Transactional
     public Usuario findByCorreoAndClave(String correo, String clave) {
-        return usuarioRepository.findByCorreoAndClave(correo, clave);
+        try {
+            return usuarioRepository.findByCorreoAndClave(correo, clave);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
 
