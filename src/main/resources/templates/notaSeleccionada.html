@@ -143,7 +143,7 @@
           <a class="nav-link text-white" href="/anotepad/funciones">Funciones</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white" href="/usuario/cuenta">Registro/Login</a>
+          <a class="nav-link text-white" href="/usuario/cuenta">Cerrar sesión</a>
         </li>
         <li class="nav-item">
           <a class="nav-link text-white" href="#">
@@ -210,7 +210,7 @@
                 <strong>Descargar</strong>
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                <li><a class="dropdown-item" href="#">PDF File</a></li>
+                <li><a th:href="@{/anotepad/notaSeleccionada/{id}/descargarPDF(id=${nota.id})}" class="dropdown-item">PDF File</a></li>
                 <li><a class="dropdown-item" href="#">Word Doc</a></li>
                 <li><a class="dropdown-item" href="#">Word Docx</a></li>
                 <li><a class="dropdown-item" href="#">OTD File</a></li>
