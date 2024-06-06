@@ -95,7 +95,7 @@ public class NotaController {
         return "listar";
     }
 
-    @GetMapping("/detalle/{id}")
+    @GetMapping("/notaSeleccionada/{id}")
     public String mostrarDetalle(@PathVariable("id") Long id, Model model) {
         Nota nota = notaService.findById(id);
         if (nota == null) {
@@ -103,10 +103,8 @@ public class NotaController {
             return "funciones"; // Página de error personalizada
         }
         model.addAttribute("nota", nota);
-        return "detalle"; // Nombre de la vista de detalle
+        return "notaSeleccionada"; // Nombre de la vista de detalle
     }
-
-
 
 
     @PostMapping("/nueva")

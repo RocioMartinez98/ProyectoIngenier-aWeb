@@ -280,7 +280,7 @@
         </a><br><br><br>
 
         <div th:each="nota : ${notasLista}">
-            <a th:href="@{/anotepad/detalle/{id}(id=${nota.id})}">
+            <a th:href="@{/anotepad/notaSeleccionada/{id}(id=${nota.id})}">
                 <img th:src="@{/images/carpeta.png}" alt="notaImagen"
                      style="width: 20px; height: 20px; margin-right: 5px;">
                 <button style="background-color: transparent; color: inherit; border: none;" th:text="${nota.titulo}"></button>
