@@ -129,11 +129,12 @@ public class NotaController {
         Usuario usuarioAutenticado = (Usuario) session.getAttribute("usuarioAutenticado");
         if (usuarioAutenticado != null) {
             notaService.update(id, nota);
-            return "redirect:/anotepad/notasDeUsuario";
+            return "redirect:/anotepad/notasDeUsuarioReload?reload=true";
         } else {
             return "redirect:/usuario/login"; // Redirigir al login si no hay usuario autenticado
         }
     }
+
 
     @GetMapping("/eliminar/{id}")
     public String eliminarNota(@PathVariable Long id) {
@@ -152,6 +153,27 @@ public class NotaController {
             return "redirect:/usuario/login"; // Redirigir al login si no hay usuario autenticado
         }
     }
+
+    @GetMapping("/notasDeUsuarioReload")
+    public String listarNotasDeUsuario(Model model, HttpSession session, @RequestParam(value = "reload", required = false) Boolean reload) {
+        Usuario usuarioAutenticado = (Usuario) session.getAttribute("usuarioAutenticado");
+        if (usuarioAutenticado != null) {
+            if (Boolean.TRUE.equals(reload)) {
+                // Recargar la lista de notas
+                List<Nota> notas = usuarioAutenticado.getNotas();
+                model.addAttribute("NotasLista", notas);
+            } else {
+                // Si reload es null o false, obtenemos las notas del usuario autenticado
+                List<Nota> notas = usuarioAutenticado.getNotas();
+                model.addAttribute("NotasLista", notas);
+            }
+            return "notasDeUsuario";
+        } else {
+            return "redirect:/usuario/login"; // Redirigir al login si no hay usuario autenticado
+        }
+    }
+
+
 
 
 }

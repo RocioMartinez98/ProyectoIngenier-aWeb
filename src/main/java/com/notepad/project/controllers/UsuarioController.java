@@ -34,7 +34,7 @@ public class UsuarioController {
     @PostMapping("/nuevo")
     public String guardarNuevoUsuario(@ModelAttribute Usuario usuario) {
         usuarioService.create(usuario);
-        return "redirect:/anotepad";
+        return "crearCuenta";
     }
 
     @GetMapping("/editarUsuario/{id}")
@@ -83,16 +83,15 @@ public class UsuarioController {
 
     @PostMapping("/cuenta")
     public String cuenta(@RequestParam String correo, @RequestParam String clave, Model model, HttpSession session) {
-        Usuario usuario = usuarioService.findByCorreoAndClave(correo, clave);
-        if (usuario != null) {
-            session.setAttribute("usuarioAutenticado", usuario);
-            return "redirect:/anotepad/notasDeUsuario";
-        } else {
-            model.addAttribute("error", "Usuario o contraseña incorrectos");
-            return "crearCuenta";
-        }
+            Usuario usuario = usuarioService.findByCorreoAndClave(correo, clave);
+            if (usuario != null) {
+                session.setAttribute("usuarioAutenticado", usuario);
+                return "redirect:/anotepad/notasDeUsuario";
+            } else {
+                model.addAttribute("error", "Usuario o contraseña incorrectos");
+                return "login";
+            }
     }
-
 
 
 
