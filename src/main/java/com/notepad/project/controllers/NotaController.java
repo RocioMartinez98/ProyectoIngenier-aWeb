@@ -103,6 +103,7 @@ public class NotaController {
             return "funciones"; // Página de error personalizada
         }
         model.addAttribute("nota", nota);
+        model.addAttribute("accion", "/anotepad/editar/" + id); // Agregar la acción para el formulario
         return "notaSeleccionada"; // Nombre de la vista de detalle
     }
 
@@ -114,16 +115,22 @@ public class NotaController {
     }
 
     @GetMapping("/editar/{id}")
-    public String mostrarFormularioEditarNota(@PathVariable Long id, @ModelAttribute Nota nota, Model model, HttpSession session) {
+    public String mostrarFormularioEditarNota(@PathVariable Long id, Model model, HttpSession session) {
         Usuario usuarioAutenticado = (Usuario) session.getAttribute("usuarioAutenticado");
         if (usuarioAutenticado != null) {
+            Nota nota = notaService.findById(id);
+            if (nota == null) {
+                // Manejo de error si la nota no existe
+                return "funciones"; // Página de error personalizada
+            }
             model.addAttribute("nota", nota);
             model.addAttribute("accion", "/anotepad/editar/" + id);
-            return "ejemploEditarNota";
+            return "notaSeleccionada"; // Nombre de la vista de detalle/edición
         } else {
             return "redirect:/usuario/login"; // Redirigir al login si no hay usuario autenticado
         }
     }
+
     @PostMapping("/editar/{id}")
     public String actualizarNota(@PathVariable Long id, @ModelAttribute Nota nota, HttpSession session) {
         Usuario usuarioAutenticado = (Usuario) session.getAttribute("usuarioAutenticado");
