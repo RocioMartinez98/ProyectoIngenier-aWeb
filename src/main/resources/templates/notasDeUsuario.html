@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <title>Notas del Usuario</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
 </head>
 <style>
     #titulo::placeholder {
@@ -120,6 +123,41 @@
     display: flex;
     flex-direction: column;
     }
+
+    .btn-primary {
+            background-color: #5182BC;
+            border-color: #5182BC;
+        }
+
+        .btn-primary:hover {
+            background-color: #3b6ca6;
+            border-color: #3b6ca6;
+        }
+
+        .btn-primary:focus {
+            background-color: #3b6ca6;
+            border-color: #3b6ca6;
+            box-shadow: 0 0 0 0.25rem rgba(81, 130, 188, 0.5);
+        }
+
+        .btn-primary:not(:disabled):not(.disabled):active {
+            background-color: #3b6ca6;
+            border-color: #3b6ca6;
+        }
+
+        .btn-primary:not(:disabled):not(.disabled):active:focus {
+            box-shadow: 0 0 0 0.25rem rgba(81, 130, 188, 0.5);
+        }
+
+        .btn-primary:not(:disabled):not(.disabled):active:hover {
+            background-color: #305184;
+            border-color: #305184;
+        }
+
+        .text-primary {
+            color: #5182BC !important;
+        }
+
 </style>
 </head>
 
@@ -140,6 +178,12 @@
                     <a class="nav-link text-white" href="/anotepad/funciones">Funciones</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link text-white" href="/usuario/ajustesCuenta">Ajustes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="/usuario/cuenta">Cerrar sesión</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link text-white" href="#">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-globe2" viewBox="0 0 16 16">
                             <path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m7.5-6.923c-.67.204-1.335.82-1.887 1.855q-.215.403-.395.872c.705.157 1.472.257 2.282.287zM4.249 3.539q.214-.577.481-1.078a7 7 0 0 1 .597-.933A7 7 0 0 0 3.051 3.05q.544.277 1.198.49zM3.509 7.5c.036-1.07.188-2.087.436-3.008a9 9 0 0 1-1.565-.667A6.96 6.96 0 0 0 1.018 7.5zm1.4-2.741a12.3 12.3 0 0 0-.4 2.741H7.5V5.091c-.91-.03-1.783-.145-2.591-.332M8.5 5.09V7.5h2.99a12.3 12.3 0 0 0-.399-2.741c-.808.187-1.681.301-2.591.332zM4.51 8.5c.035.987.176 1.914.399 2.741A13.6 13.6 0 0 1 7.5 10.91V8.5zm3.99 0v2.409c.91.03 1.783.145 2.591.332.223-.827.364-1.754.4-2.741zm-3.282 3.696q.18.469.395.872c.552 1.035 1.218 1.65 1.887 1.855V11.91c-.81.03-1.577.13-2.282.287zm.11 2.276a7 7 0 0 1-.598-.933 9 9 0 0 1-.481-1.079 8.4 8.4 0 0 0-1.198.49 7 7 0 0 0 2.276 1.522zm-1.383-2.964A13.4 13.4 0 0 1 3.508 8.5h-2.49a6.96 6.96 0 0 0 1.362 3.675c.47-.258.995-.482 1.565-.667m6.728 2.964a7 7 0 0 0 2.275-1.521 8.4 8.4 0 0 0-1.197-.49 9 9 0 0 1-.481 1.078 7 7 0 0 1-.597.933M8.5 11.909v3.014c.67-.204 1.335-.82 1.887-1.855q.216-.403.395-.872A12.6 12.6 0 0 0 8.5 11.91zm3.555-.401c.57.185 1.095.409 1.565.667A6.96 6.96 0 0 0 14.982 8.5h-2.49a13.4 13.4 0 0 1-.437 3.008M14.982 7.5a6.96 6.96 0 0 0-1.362-3.675c-.47.258-.995.482-1.565.667.248.92.4 1.938.437 3.008zM11.27 2.461q.266.502.482 1.078a8.4 8.4 0 0 0 1.196-.49 7 7 0 0 0-2.275-1.52c.218.283.418.597.597.932m-.488 1.343a8 8 0 0 0-.395-.872C9.835 1.897 9.17 1.282 8.5 1.077V4.09c.81-.03 1.577-.13 2.282-.287z"/>
@@ -150,63 +194,98 @@
         </div>
     </div>
 </header>
-<div class="container mt-5">
-    <h1>Notas del Usuario</h1>
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Id</th>
-            <th>Titulo</th>
-            <th>Texto</th>
-            <th>Opciones</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="nota : ${NotasLista}">
-            <td th:text="${nota.id}"></td>
-            <td th:text="${nota.titulo}"></td>
-            <td th:text="${nota.texto}"></td>
-            <td>
-                <a th:href="@{/anotepad/editar/{id}(id=${nota.id})}" class="btn btn-primary">Editar</a>
-            </td>
-        </tr>
-        </tbody>
 
-    </table>
-</div>
-    <footer class="custom-footer text-light text-center py-4">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <a href="https://apps.apple.com/us/app/a-notepad-take-share-notes/id1494609935"><img th:src="@{/images/iconoApple.png}" class="footer-icon"></a>
-                    <a href="https://play.google.com/store/apps/details?id=com.anotepad.android&pli=1"><img th:src="@{/images/iconoPstore.png}" class="footer-icon"></a>
-                </div>
+
+    <div class="container">
+        <br>
+        <a><span style="font-size: large;"><strong>Mis notas guardadas</strong></span></a>
+        <br>
+        <br>
+
+        <div class="d-flex align-items-center">
+            <button class="btn custom-dropdown-toggle" type="button" id="ordenarAlfabeticamente" aria-expanded="false">
+                Ordenar por titulo
+            </button>
+            <button class="btn custom-dropdown-toggle" type="button" id="ordenarActualizado" aria-expanded="false">Ordenar
+                por actualizado
+            </button>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <a href="">
+                    <img th:src="@{/images/carpeta.png}" alt="todasLasNotas" style="width: 20px; height: 20px; margin-right: 5px;">
+                    <button class="text-primary" style="background-color: transparent; color: inherit; border: none;"><strong>Todas las notas</strong></button>
+                </a><br><br>
+                <a href="">
+                    <img th:src="@{/images/carpeta.png}" alt="bandejaEntrada" style="width: 20px; height: 20px; margin-right: 5px;">
+                    <button class="text-primary" style="background-color: transparent; color: inherit; border: none;">Bandeja de entrada</button>
+                </a><br><br>
+                <a href="https://www.freecodecamp.org/">
+                    <img th:src="@{/images/carpeta2.png}" alt="adminCarpetas" style="width: 20px; height: 20px; margin-right: 5px;">
+                    <button class="text-primary" style="background-color: transparent; color: inherit; border: none;">Administrar carpetas</button>
+                </a><br><br><br>
             </div>
-            <div class="row mt-2">
-                <div class="col-12">
-                    <p class="text-white">© 2009-2024 aNotepad.com</p>
-                </div>
-            </div>
-            <div class="row mt-2">
-                <div class="col-12">
-                    <a href="/anotepad/acercaDe" class="text-light me-2">Acerca de</a> |
-                    <a href="/anotepad/intimidad" class="text-light me-2">Intimidad</a> |
-                    <a href="/anotepad/funciones" class="text-light me-2">Funciones</a> |
-                    <a href="#" class="text-light me-2">Constructor de currículums</a> |
-                    <a href="#" class="text-light me-2">Fax gratuito</a> |
-                    <a href="/anotepad/reportarAbuso" class="text-light">Reportar abuso</a>
-                </div>
-            </div>
-            <div class="row mt-2">
-                <div class="col-12">
-                    <p class="text-white">aNotepad.com es su bloc de notas en línea de todos los días. Puede tomar notas y compartir notas en línea sin tener que iniciar sesión.</p>
-                    <p class="text-white">Puede utilizar un editor de texto enriquecido y descargar su nota como documento PDF o Word.</p>
-                    <p class="text-white">Lo mejor de todo: un Bloc de notas es un bloc de notas en línea rápido, limpio y fácil de usar.</p>
+
+            <div class="col-md-8">
+                <div th:each="nota : ${NotasLista}" class="nota">
+                    <div class="d-flex align-items-center">
+                        <img th:src="@{/images/carpeta.png}" alt="notaIcono" style="width: 20px; height: 20px; margin-right: 5px;">
+                        <span th:text="${nota.titulo}"></span>
+
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" th:href="@{/anotepad/editar/{id}(id=${nota.id})}">Editar</a>
+                                <a class="dropdown-item" href="#">Eliminar</a>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="nota-texto" th:text="${nota.texto}"></div>
                 </div>
             </div>
         </div>
-    </footer>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    </div>
 
+
+
+
+<footer class="custom-footer text-light text-center py-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <a href="https://apps.apple.com/us/app/a-notepad-take-share-notes/id1494609935"><img th:src="@{/images/iconoApple.png}" class="footer-icon"></a>
+                <a href="https://play.google.com/store/apps/details?id=com.anotepad.android&pli=1"><img th:src="@{/images/iconoPstore.png}" class="footer-icon"></a>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-12">
+                <p class="text-white">© 2009-2024 aNotepad.com</p>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-12">
+                <a href="/anotepad/acercaDe" class="text-light me-2">Acerca de</a> |
+                <a href="/anotepad/intimidad" class="text-light me-2">Intimidad</a> |
+                <a href="/anotepad/funciones" class="text-light me-2">Funciones</a> |
+                <a href="#" class="text-light me-2">Constructor de currículums</a> |
+                <a href="#" class="text-light me-2">Fax gratuito</a> |
+                <a href="/anotepad/reportarAbuso" class="text-light">Reportar abuso</a>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-12">
+                <p class="text-white">aNotepad.com es su bloc de notas en línea de todos los días. Puede tomar notas y compartir notas en línea sin tener que iniciar sesión.</p>
+                <p class="text-white">Puede utilizar un editor de texto enriquecido y descargar su nota como documento PDF o Word.</p>
+                <p class="text-white">Lo mejor de todo: un Bloc de notas es un bloc de notas en línea rápido, limpio y fácil de usar.</p>
+            </div>
+        </div>
+    </div>
+</footer>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
 </html>

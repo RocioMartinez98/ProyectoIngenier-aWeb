@@ -122,6 +122,40 @@
             flex-direction: column;
         }
 
+        .btn-primary {
+            background-color: #5182BC;
+            border-color: #5182BC;
+        }
+
+        .btn-primary:hover {
+            background-color: #3b6ca6;
+            border-color: #3b6ca6;
+        }
+
+        .btn-primary:focus {
+            background-color: #3b6ca6;
+            border-color: #3b6ca6;
+            box-shadow: 0 0 0 0.25rem rgba(81, 130, 188, 0.5);
+        }
+
+        .btn-primary:not(:disabled):not(.disabled):active {
+            background-color: #3b6ca6;
+            border-color: #3b6ca6;
+        }
+
+        .btn-primary:not(:disabled):not(.disabled):active:focus {
+            box-shadow: 0 0 0 0.25rem rgba(81, 130, 188, 0.5);
+        }
+
+        .btn-primary:not(:disabled):not(.disabled):active:hover {
+            background-color: #305184;
+            border-color: #305184;
+        }
+
+        .text-primary {
+            color: #5182BC !important;
+        }
+
 
     </style>
 </head>
@@ -246,47 +280,55 @@
     </nav>
 
     <br>
-    <a><span style="font-size: large;"><strong>Mis notas guardadas</strong></span></a>
-    <br>
-    <br>
 
-    <div class="d-flex align-items-center">
-        <button class="btn custom-dropdown-toggle" type="button" id="ordenarAlfabeticamente" aria-expanded="false">
-            Ordenar por titulo
-        </button>
-        <button class="btn custom-dropdown-toggle" type="button" id="ordenarActualizado" aria-expanded="false">Ordenar
-            por actualizado
-        </button>
-    </div>
-    <br>
+    <nav class="container">
 
-    <div>
-        <a href="/anotepad/listar">
-            <img th:src="@{/images/carpeta.png}" alt="todasLasNotas"
-                 style="width: 20px; height: 20px; margin-right: 5px;">
-            <button style="background-color: transparent; color: inherit; border: none;"><strong>Todas las
-                notas</strong></button>
-        </a><br><br>
-        <a href="/anotepad/listar">
-            <img th:src="@{/images/carpeta.png}" alt="bandejaEntrada"
-                 style="width: 20px; height: 20px; margin-right: 5px;">
-            <button style="background-color: transparent; color: inherit; border: none;">Bandeja de entrada</button>
-        </a><br><br>
+        <br>
+        <a><span style="font-size: large;"><strong>Mis notas guardadas</strong></span></a>
+        <br>
+        <br>
 
-        <a href="https://www.freecodecamp.org/">
-            <img th:src="@{/images/carpeta2.png}" alt="adminCarpetas"
-                 style="width: 20px; height: 20px; margin-right: 5px;">
-            <button style="background-color: transparent; color: inherit; border: none;">Administrar carpetas</button>
-        </a><br><br><br>
-
-        <div th:each="nota : ${notasLista}">
-            <a th:href="@{/anotepad/notaSeleccionada/{id}(id=${nota.id})}">
-                <img th:src="@{/images/carpeta.png}" alt="notaImagen"
-                     style="width: 20px; height: 20px; margin-right: 5px;">
-                <button style="background-color: transparent; color: inherit; border: none;" th:text="${nota.titulo}"></button>
-            </a><br><br>
+        <div class="d-flex align-items-center">
+            <button class="btn custom-dropdown-toggle" type="button" id="ordenarAlfabeticamente" aria-expanded="false">
+                Ordenar por titulo
+            </button>
+            <button class="btn custom-dropdown-toggle" type="button" id="ordenarActualizado" aria-expanded="false">Ordenar
+                por actualizado
+            </button>
         </div>
-    </div>
+
+        <div class="row">
+            <!-- Enlaces del lado izquierdo -->
+            <div class="col-md-4">
+                <a href="/anotepad/listar">
+                    <img th:src="@{/images/carpeta.png}" alt="todasLasNotas" style="width: 20px; height: 20px; margin-right: 5px;">
+                    <button class="text-primary" style="background-color: transparent; color: inherit; border: none;"><strong>Todas las notas</strong></button>
+                </a><br><br>
+                <a href="/anotepad/listar">
+                    <img th:src="@{/images/carpeta.png}" alt="bandejaEntrada" style="width: 20px; height: 20px; margin-right: 5px;">
+                    <button class="text-primary" style="background-color: transparent; color: inherit; border: none;">Bandeja de entrada</button>
+                </a><br><br>
+                <a href="https://www.freecodecamp.org/">
+                    <img th:src="@{/images/carpeta2.png}" alt="adminCarpetas" style="width: 20px; height: 20px; margin-right: 5px;">
+                    <button class="text-primary" style="background-color: transparent; color: inherit; border: none;">Administrar carpetas</button>
+                </a><br><br><br>
+            </div>
+
+            <!-- Notas del lado derecho -->
+            <div class="col-md-8">
+                <div th:each="nota : ${notasLista}">
+                    <a th:href="@{/anotepad/notaSeleccionada/{id}(id=${nota.id})}">
+                        <img th:src="@{/images/carpeta.png}" alt="notaImagen" style="width: 20px; height: 20px; margin-right: 5px;">
+                        <button class="text-primary" style="background-color: transparent; color: inherit; border: none;" th:text="${nota.titulo}"></button>
+                    </a><br><br>
+                </div>
+            </div>
+        </div>
+
+
+    </nav>
+
+
 </nav>
 </div>
 

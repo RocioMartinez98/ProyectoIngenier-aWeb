@@ -10,6 +10,7 @@ import com.notepad.project.models.Nota;
 import com.notepad.project.service.NotaService;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -144,9 +145,15 @@ public class NotaController {
 
 
     @GetMapping("/eliminar/{id}")
-    public String eliminarNota(@PathVariable Long id) {
-        notaService.delete(id);
-        return "redirect:/anotepad";
+    public String eliminarNota(@PathVariable Long id, HttpSession session, RedirectAttributes redirectAttributes) {
+        Usuario usuarioAutenticado = (Usuario) session.getAttribute("usuarioAutenticado");
+        if (usuarioAutenticado != null) {
+            notaService.delete(id);
+            redirectAttributes.addFlashAttribute("mensajeEliminacion", "Nota eliminada exitosamente.");
+            return "redirect:/anotepad/notasDeUsuario";
+        } else {
+            return "redirect:/usuario/login";
+        }
     }
 
     @GetMapping("/notasDeUsuario")
