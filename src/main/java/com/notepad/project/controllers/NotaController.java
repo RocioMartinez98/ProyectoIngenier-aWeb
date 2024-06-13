@@ -1,6 +1,7 @@
 package com.notepad.project.controllers;
 
 import com.notepad.project.models.Usuario;
+import com.notepad.project.service.UsuarioService;
 import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +23,8 @@ public class NotaController {
 
     @Autowired
     private NotaService notaService;
+    @Autowired
+    private UsuarioService usuarioService;
 
     @GetMapping("/notaSeleccionada")
     public String pantallanotaSeleccionada() {
@@ -104,8 +107,8 @@ public class NotaController {
             return "funciones"; // Página de error personalizada
         }
         model.addAttribute("nota", nota);
-        model.addAttribute("accion", "/anotepad/editar/" + id); // Agregar la acción para el formulario
-        return "notaSeleccionada"; // Nombre de la vista de detalle
+        model.addAttribute("accion", "/anotepad/editar/" + id);
+        return "notaSeleccionada";
     }
 
 
@@ -139,7 +142,7 @@ public class NotaController {
             notaService.update(id, nota);
             return "redirect:/anotepad/notasDeUsuarioReload?reload=true";
         } else {
-            return "redirect:/usuario/login"; // Redirigir al login si no hay usuario autenticado
+            return "redirect:/usuario/login";
         }
     }
 
@@ -151,7 +154,7 @@ public class NotaController {
             notaService.eliminarNota(usuarioAutenticado.getId(), notaId);
             return "redirect:/anotepad/notasDeUsuario";
         } else {
-            return "redirect:/usuario/login"; // Redirigir al login si no hay usuario autenticado
+            return "redirect:/usuario/login";
         }
     }
 
@@ -163,7 +166,7 @@ public class NotaController {
             model.addAttribute("NotasLista", notas); //key-valor
             return "notasDeUsuario";
         } else {
-            return "redirect:/usuario/login"; // Redirigir al login si no hay usuario autenticado
+            return "redirect:/usuario/login";
         }
     }
 
@@ -184,6 +187,28 @@ public class NotaController {
         } else {
             return "redirect:/usuario/login"; // Redirigir al login si no hay usuario autenticado
         }
+    }
+
+
+    @GetMapping("/nuevaDeUsuario")
+    public String mostrarFormularioNuevaNota(Model model) {
+        model.addAttribute("Nota", new Nota());
+        return "notasDeUsuario";
+    }
+
+
+    @PostMapping("/nuevaDeUsuario")
+    public String guardarNuevaNota(@ModelAttribute Nota nota, HttpSession session) {
+        Usuario usuarioAutenticado = (Usuario) session.getAttribute("usuarioAutenticado");
+        if (usuarioAutenticado != null) {
+            // Asigna la nota al usuario
+            usuarioAutenticado.getNotas().add(nota);
+            // Guarda la nota
+            notaService.create(nota);
+            // Actualiza el usuario en la base de datos
+            usuarioService.update(usuarioAutenticado.getId(), usuarioAutenticado);
+        }
+        return "redirect:/anotepad/notasDeUsuario";
     }
 
 
