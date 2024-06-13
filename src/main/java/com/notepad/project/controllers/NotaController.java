@@ -173,6 +173,7 @@ public class NotaController {
 
     @GetMapping("/notasDeUsuarioReload")
     public String listarNotasDeUsuario(Model model, HttpSession session, @RequestParam(value = "reload", required = false) Boolean reload) {
+        model.addAttribute("Nota", new Nota());
         Usuario usuarioAutenticado = (Usuario) session.getAttribute("usuarioAutenticado");
         if (usuarioAutenticado != null) {
             if (Boolean.TRUE.equals(reload)) {
@@ -189,13 +190,6 @@ public class NotaController {
             return "redirect:/usuario/login"; // Redirigir al login si no hay usuario autenticado
         }
     }
-
-
-    /*@GetMapping("/nuevaDeUsuario")
-    public String mostrarFormularioNuevaNota(Model model) {
-        model.addAttribute("Nota", new Nota());
-        return "notasDeUsuario";
-    }*/
 
 
     @PostMapping("/notasDeUsuario")
