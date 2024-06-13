@@ -160,6 +160,7 @@ public class NotaController {
 
     @GetMapping("/notasDeUsuario")
     public String listarNotasDeUsuario(Model model, HttpSession session) {
+        model.addAttribute("Nota", new Nota());
         Usuario usuarioAutenticado = (Usuario) session.getAttribute("usuarioAutenticado");
         if (usuarioAutenticado != null) {
             List<Nota> notas = usuarioAutenticado.getNotas();
@@ -190,14 +191,14 @@ public class NotaController {
     }
 
 
-    @GetMapping("/nuevaDeUsuario")
+    /*@GetMapping("/nuevaDeUsuario")
     public String mostrarFormularioNuevaNota(Model model) {
         model.addAttribute("Nota", new Nota());
         return "notasDeUsuario";
-    }
+    }*/
 
 
-    @PostMapping("/nuevaDeUsuario")
+    @PostMapping("/notasDeUsuario")
     public String guardarNuevaNota(@ModelAttribute Nota nota, HttpSession session) {
         Usuario usuarioAutenticado = (Usuario) session.getAttribute("usuarioAutenticado");
         if (usuarioAutenticado != null) {
