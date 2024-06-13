@@ -19,8 +19,14 @@ public class Usuario {
     private String correo;
     private String clave;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @JoinTable(name = "USUARIO_NOTAS", joinColumns = @JoinColumn(name = "USUARIO_ID"), inverseJoinColumns = @JoinColumn(name = "NOTAS_ID"))
     private List<Nota> notas;
+
+
+    public void eliminarNota(Nota nota){
+        this.notas.remove(nota);
+    }
 
 }
 

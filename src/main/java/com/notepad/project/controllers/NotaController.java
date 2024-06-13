@@ -144,15 +144,14 @@ public class NotaController {
     }
 
 
-    @GetMapping("/eliminar/{id}")
-    public String eliminarNota(@PathVariable Long id, HttpSession session, RedirectAttributes redirectAttributes) {
+    @GetMapping("/eliminarNota/{notaId}")
+    public String eliminarNota(@PathVariable Long notaId, HttpSession session) {
         Usuario usuarioAutenticado = (Usuario) session.getAttribute("usuarioAutenticado");
         if (usuarioAutenticado != null) {
-            notaService.delete(id);
-            redirectAttributes.addFlashAttribute("mensajeEliminacion", "Nota eliminada exitosamente.");
+            notaService.eliminarNota(usuarioAutenticado.getId(), notaId);
             return "redirect:/anotepad/notasDeUsuario";
         } else {
-            return "redirect:/usuario/login";
+            return "redirect:/usuario/login"; // Redirigir al login si no hay usuario autenticado
         }
     }
 

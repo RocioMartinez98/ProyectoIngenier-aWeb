@@ -20,6 +20,10 @@ public class Nota{
     private int tipo;
     private String texto;
 
+    public Nota(Long id){
+        this.id = id;
+    }
+
 
 
 }

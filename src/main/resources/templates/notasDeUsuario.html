@@ -238,7 +238,7 @@
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <a class="dropdown-item" th:href="@{/anotepad/editar/{id}(id=${nota.id})}">Editar</a>
-                                <a class="dropdown-item" th:href="@{/anotepad/eliminar/{id}(id=${nota.id})}">Eliminar</a>
+                                <a class="dropdown-item" th:href="@{'/anotepad/eliminarNota/' + ${nota.id}}">Eliminar</a>
                             </div>
                         </div>
 
