@@ -223,13 +223,13 @@
                     </div>
 
                     <div class="file-input-container me-2">
-                        <label for="formFile" class="custom-file-label">Insertar Word/PDF</label>
-                        <input class="form-control" type="file" id="formFile">
+                        <input type="file" id="fileInput" style="display: none;">
+                        <button id="insertarBtn" class="btn btn-primary">Insertar Word/PDF</button>
                     </div>
 
                     <div class="file-input-container me-2">
-                        <label for="formFile" class="custom-file-label">Cuota</label>
-                        <input class="form-control" type="file" id="formFile2">
+                        <input id="cuota" style="display: none;">
+                        <button id="btnCompartir" class="btn btn-primary">Compartir</button>
                     </div>
 
                 </div>
@@ -302,22 +302,19 @@
 
         <div class="row">
             <div class="col-md-4">
-                <a href="">
-                    <img th:src="@{/images/carpeta.png}" alt="todasLasNotas" style="width: 20px; height: 20px; margin-right: 5px;">
-                    <button class="text-primary" style="background-color: transparent; color: inherit; border: none;"><strong>Todas las notas</strong></button>
-                </a><br><br>
-                <a href="">
-                    <img th:src="@{/images/carpeta.png}" alt="bandejaEntrada" style="width: 20px; height: 20px; margin-right: 5px;">
-                    <button class="text-primary" style="background-color: transparent; color: inherit; border: none;">Bandeja de entrada</button>
-                </a><br><br>
-                <a href="https://www.freecodecamp.org/">
-                    <img th:src="@{/images/carpeta2.png}" alt="adminCarpetas" style="width: 20px; height: 20px; margin-right: 5px;">
-                    <button class="text-primary" style="background-color: transparent; color: inherit; border: none;">Administrar carpetas</button>
-                </a><br><br><br>
+                <img th:src="@{/images/carpeta.png}" alt="todasLasNotas" style="width: 20px; height: 20px; margin-right: 5px;">
+                <button href="/anotepad/" class="text-primary" style="background-color: transparent; color: inherit; border: none;"><strong>Todas las notas</strong></button>
+                <br><br>
+                <img th:src="@{/images/carpeta.png}" alt="bandejaEntrada" style="width: 20px; height: 20px; margin-right: 5px;">
+                <button href="/anotepad/" class="text-primary" style="background-color: transparent; color: inherit; border: none;">Bandeja de entrada</button>
+                <br><br>
+                <img th:src="@{/images/carpeta2.png}" alt="adminCarpetas" style="width: 20px; height: 20px; margin-right: 5px;">
+                <button id ="admin" class="text-primary" style="background-color: transparent; color: inherit; border: none;">Administrar carpetas</button>
+                <br><br><br>
             </div>
 
-            <div class="col-md-8">
-                <div th:each="nota : ${NotasLista}" class="nota">
+            <div class="col-md-8" id="notasContainer">
+                <div th:each="nota : ${NotasLista}" class="nota" th:id="${nota.id}">
                     <div class="d-flex align-items-center">
                         <img th:src="@{/images/carpeta.png}" alt="notaIcono" style="width: 20px; height: 20px; margin-right: 5px;">
                         <span th:text="${nota.titulo}"></span>
@@ -338,8 +335,6 @@
     </div>
 
 
-
-
 <footer class="custom-footer text-light text-center py-4">
     <div class="container">
         <div class="row">
@@ -358,8 +353,8 @@
                 <a href="/anotepad/acercaDe" class="text-light me-2">Acerca de</a> |
                 <a href="/anotepad/intimidad" class="text-light me-2">Intimidad</a> |
                 <a href="/anotepad/funciones" class="text-light me-2">Funciones</a> |
-                <a href="#" class="text-light me-2">Constructor de currículums</a> |
-                <a href="#" class="text-light me-2">Fax gratuito</a> |
+                <a href="https://www.gotresumebuilder.com/" class="text-light me-2">Constructor de currículums</a> |
+                <a href="https://www.gotfreefax.com/" class="text-light me-2">Fax gratuito</a> |
                 <a href="/anotepad/reportarAbuso" class="text-light">Reportar abuso</a>
             </div>
         </div>
@@ -375,5 +370,66 @@
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+<script>
+    document.getElementById('ordenarAlfabeticamente').addEventListener('click', function () {
+        var notasContainer = document.getElementById('notasContainer');
+        var notas = Array.from(notasContainer.getElementsByClassName('nota'));
+
+        notas.sort(function (a, b) {
+            var tituloA = a.querySelector('button.text-primary').textContent.trim();
+            var tituloB = b.querySelector('button.text-primary').textContent.trim();
+            return tituloA.localeCompare(tituloB);
+        });
+
+        notas.forEach(function (nota) {
+            notasContainer.appendChild(nota);
+        });
+    });
+
+    document.getElementById('ordenarActualizado').addEventListener('click', function () {
+        var notasContainer = document.getElementById('notasContainer');
+        var notas = Array.from(notasContainer.getElementsByClassName('nota'));
+
+        // Ordenar las notas de mayor a menor según su ID
+        notas.sort(function (a, b) {
+            var idA = parseInt(a.getAttribute('id'));
+            var idB = parseInt(b.getAttribute('id'));
+            return idB - idA; // Ordena de mayor a menor según el ID
+        });
+
+        // Limpiar el contenedor antes de mostrar las notas ordenadas
+        notasContainer.innerHTML = '';
+
+        // Agregar las notas ordenadas de nuevo al contenedor
+        notas.forEach(function (nota) {
+            notasContainer.appendChild(nota);
+        });
+    });
+
+    document.getElementById('insertarBtn').addEventListener('click', function() {
+        document.getElementById('fileInput').click();
+    });
+
+    document.getElementById('btnCompartir').addEventListener('click', function(event) {
+        event.preventDefault(); // Evita que se envíe el formulario
+
+        var url = window.location.href; // Obtiene la URL actual de la página
+        navigator.clipboard.writeText(url).then(function() {
+            alert('¡Enlace copiado al portapapeles!');
+        }).catch(function(err) {
+            console.error('Error al copiar el enlace: ', err);
+        });
+    });
+
+    document.getElementById('admin').addEventListener('click', function(event) {
+        event.preventDefault(); // Evita que se envíe el formulario
+        alert('¡Funcionalidad aún no implementada!');
+    });
+
+
+</script>
+
+
 </body>
 </html>

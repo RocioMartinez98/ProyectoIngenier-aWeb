@@ -61,6 +61,20 @@ public class NotaController {
         return "reportarAbuso";
     }
 
+    @GetMapping("/detalle/{id}")
+    public String mostrarNota(Model model) {
+        // Aquí puedes agregar la lógica para obtener la información de la nota
+        String titulo = "Título de la nota";
+        String texto = "Contenido de la nota";
+
+        // Agregar los atributos al modelo para que estén disponibles en la plantilla Thymeleaf
+        model.addAttribute("titulo", titulo);
+        model.addAttribute("texto", texto);
+
+        // Devolver el nombre de la plantilla Thymeleaf que representa esta página HTML
+        return "detalle";
+    }
+
     @GetMapping
     public String pantallaPrincipal(Model model) {
         model.addAttribute("Nota", new Nota());
@@ -70,21 +84,6 @@ public class NotaController {
         return "anotepad"; //nos retorna el archivo anotepad
     }
 
-    /*@GetMapping("/anotepad")
-    public String pantallaPrincipal(Model model) {
-        List<Nota> notas = notaService.findAllNotas();
-        model.addAttribute("notasLista", notas);
-        return "anotepad"; // Nombre de la vista principal de Anotepad
-    }*/
-
-   /* @GetMapping("/listar")
-    public String listarNotas(@RequestParam("titulo") String titulo, Model model) {
-        //List<Nota> notas = notaService.findAllNotas();
-        List<Nota> notas = notaService.findByTitulo(titulo);
-        model.addAttribute("NotasLista", notas); //key-valor
-        return "anotepad"; //nos retorna el archivo anotepad
-    }*/
-
     @GetMapping("/listar")
     public String listarNotas(@RequestParam(value = "titulo", required = false) String titulo, Model model) {
         logger.info("Parámetro titulo recibido: {}", titulo); // Verificar el valor recibido
@@ -92,7 +91,6 @@ public class NotaController {
         if (titulo != null && !titulo.isEmpty()) {
             notas = notaService.findByTitulo(titulo);
         } else {
-            //notas = notaService.findAllNotas();
             notas = new ArrayList<>();
         }
         model.addAttribute("NotasLista", notas);
@@ -101,13 +99,16 @@ public class NotaController {
 
     @GetMapping("/notaSeleccionada/{id}")
     public String mostrarDetalle(@PathVariable("id") Long id, Model model) {
+        List<Nota> notas = new ArrayList<>();
         Nota nota = notaService.findById(id);
         if (nota == null) {
             // Manejo de error si la nota no existe
-            return "funciones"; // Página de error personalizada
+            return "funciones";
         }
         model.addAttribute("nota", nota);
         model.addAttribute("accion", "/anotepad/editar/" + id);
+        notas = notaService.findAllNotas();
+        model.addAttribute("notasLista", notas);
         return "notaSeleccionada";
     }
 
@@ -152,6 +153,9 @@ public class NotaController {
         Usuario usuarioAutenticado = (Usuario) session.getAttribute("usuarioAutenticado");
         if (usuarioAutenticado != null) {
             notaService.eliminarNota(usuarioAutenticado.getId(), notaId);
+            usuarioAutenticado = usuarioService.findById(usuarioAutenticado.getId());
+            session.setAttribute("usuarioAutenticado", usuarioAutenticado);
+            session.setAttribute("NotasLista", usuarioAutenticado.getNotas());
             return "redirect:/anotepad/notasDeUsuario";
         } else {
             return "redirect:/usuario/login";

@@ -180,13 +180,16 @@
       </div>
 
       <div class="file-input-container me-2">
-        <span class="nav-link custom-file-label" href="/anotepad"> <img th:src="@{/images/nuevaNota.png}"> Nueva Nota</span>
+        <a class="nav-link custom-file-label" href="/anotepad">
+            <img th:src="@{/images/nuevaNota.png}" alt="Nueva Nota"> Nueva Nota
+        </a>
       </div>
       <div class="file-input-container me-2">
-        <span class="nav-link custom-file-label" href=""><img th:src="@{/images/buscar.png}"> Avance</span>
+        <a class="nav-link custom-file-label" th:href="@{/anotepad/detalle/{id}(id=${nota.id})}"><img th:src="@{/images/buscar.png}">Avance</a>
       </div>
       <div class="file-input-container me-2">
-        <label class="custom-file-label "><img th:src="@{/images/compartir.png}">Compartir</label>
+        <img th:src="@{/images/compartir.png}">
+        <button id ="btnCompartir" class="text-primary" style="background-color: transparent; color: inherit; border: none;">Compartir</button>
       </div>
 
     </div>
@@ -194,11 +197,11 @@
     <div class="mb-3 mt-4" id='textareaContainer'>
       <div class="file-input-container">
                 <textarea id="textarea-sinFormato" class="form-control textarea-hidden" style="display: none;
-                          "th:text="${nota.texto}" th:field="*{texto}"></textarea>
+                          " th:field="*{texto}"></textarea>
         <textarea id="textarea-conFormato" class="form-control textarea-hidden"
-                  style="display: none; "th:text="${nota.texto}" th:field="*{texto}"></textarea>
+                  style="display: none; " th:field="*{texto}"></textarea>
         <textarea id="textarea-lista" class="form-control textarea-hidden" style="display: none;
-                  "th:text="${nota.texto}" th:field="*{texto}"></textarea>
+                  " th:field="*{texto}"></textarea>
       </div>
     </div>
 
@@ -206,7 +209,7 @@
 
     <label>Nota pública (<a href="/crearCuenta" class="registro" tabindex="4">registrarse</a> para notas privadas)</label>
 
-    <span class="nav-link custom-file-label" onclick="return confirm('&#191;Est&#225;s seguro que quieres eliminar esta nota?')" href=""><strong>Borrar</strong></span>
+    <a class="nav-link custom-file-label" onclick="return confirm('&#191;Est&#225;s seguro que quieres eliminar esta nota?')" th:href="@{'/anotepad/eliminarNota/' + ${nota.id}}"><strong>Borrar</strong></a>
 
     <span class="dropdown">
             <button class=" btn dropdown-toggle custom-file-label" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -229,7 +232,6 @@
                 <li><a class="dropdown-item" href="#">Bandeja de entrada</a></li>
             </ul>
         </span>
-    <span id="lastSavedTime" class="topLinks">&#218;ltimo guardado: <span id="saveNoteMessage"> </span></span>
     <span id="actionMessage" style="display: none;" class="alert-success"></span>
 
     <br><br>
@@ -259,36 +261,34 @@
   </div>
   <br>
 
-  <div>
-    <a href="/anotepad/listar">
-      <img th:src="@{/images/carpeta.png}" alt="todasLasNotas"
-           style="width: 20px; height: 20px; margin-right: 5px;">
-      <button style="background-color: transparent; color: inherit; border: none;"><strong>Todas las
-        notas</strong></button>
-    </a><br><br>
-    <a href="/anotepad/listar">
-      <img th:src="@{/images/carpeta.png}" alt="bandejaEntrada"
-           style="width: 20px; height: 20px; margin-right: 5px;">
-      <button style="background-color: transparent; color: inherit; border: none;">Bandeja de entrada</button>
-    </a><br><br>
+  <div class="row">
+    <!-- Enlaces del lado izquierdo -->
+    <div class="col-md-4">
+      <img th:src="@{/images/carpeta.png}" alt="todasLasNotas" style="width: 20px; height: 20px; margin-right: 5px;">
+      <button href="/anotepad/" class="text-primary" style="background-color: transparent; color: inherit; border: none;"><strong>Todas las notas</strong></button>
+      <br><br>
+      <img th:src="@{/images/carpeta.png}" alt="bandejaEntrada" style="width: 20px; height: 20px; margin-right: 5px;">
+      <button href="/anotepad/" class="text-primary" style="background-color: transparent; color: inherit; border: none;">Bandeja de entrada</button>
+      <br><br>
+      <img th:src="@{/images/carpeta2.png}" alt="adminCarpetas" style="width: 20px; height: 20px; margin-right: 5px;">
+      <button id ="admin" class="text-primary" style="background-color: transparent; color: inherit; border: none;">Administrar carpetas</button>
+      <br><br><br>
+    </div>
 
-    <a href="https://www.freecodecamp.org/">
-      <img th:src="@{/images/carpeta2.png}" alt="adminCarpetas"
-           style="width: 20px; height: 20px; margin-right: 5px;">
-      <button style="background-color: transparent; color: inherit; border: none;">Administrar carpetas</button>
-    </a><br><br><br>
-
-    <div th:each="nota : ${notasLista}">
-      <a th:href="@{/anotepad/notaSeleccionada/{id}(id=${nota.id})}">
-        <img th:src="@{/images/carpeta.png}" alt="notaImagen"
-             style="width: 20px; height: 20px; margin-right: 5px;">
-        <button style="background-color: transparent; color: inherit; border: none;" th:text="${nota.titulo}"></button>
-      </a><br><br>
+    <div class="col-md-8" id="notasContainer">
+      <div th:each="nota : ${notasLista}" class="nota" th:id="${nota.id}">
+        <div class="d-flex align-items-center">
+          <a th:href="@{/anotepad/notaSeleccionada/{id}(id=${nota.id})}">
+            <img th:src="@{/images/carpeta.png}" alt="notaImagen"
+                 style="width: 20px; height: 20px; margin-right: 5px;">
+            <button style="background-color: transparent; color: inherit; border: none;" th:text="${nota.titulo}"></button>
+          </a><br><br>
+        </div><br>
+      </div>
     </div>
   </div>
 
 </nav>
-</div>
 
   <footer class="custom-footer text-light text-center py-4">
     <div class="container">
@@ -308,8 +308,8 @@
           <a href="/anotepad/acercaDe" class="text-light me-2">Acerca de</a> |
           <a href="/anotepad/intimidad" class="text-light me-2">Intimidad</a> |
           <a href="/anotepad/funciones" class="text-light me-2">Funciones</a> |
-          <a href="#" class="text-light me-2">Constructor de currículums</a> |
-          <a href="#" class="text-light me-2">Fax gratuito</a> |
+          <a href="https://www.gotresumebuilder.com/" class="text-light me-2">Constructor de currículums</a> |
+          <a href="https://www.gotfreefax.com/" class="text-light me-2">Fax gratuito</a> |
           <a href="/anotepad/reportarAbuso" class="text-light">Reportar abuso</a>
         </div>
       </div>
@@ -355,6 +355,59 @@
   // Llama a la función showTextarea al cargar la página y al cambiar la opción
   window.onload = showTextarea;
   document.getElementById("option").addEventListener("change", showTextarea);
+</script>
+
+<script>
+  document.getElementById('ordenarAlfabeticamente').addEventListener('click', function () {
+    var notasContainer = document.getElementById('notasContainer');
+    var notas = Array.from(notasContainer.getElementsByClassName('nota'));
+
+    notas.sort(function (a, b) {
+      var tituloA = a.querySelector('button.text-primary').textContent.trim();
+      var tituloB = b.querySelector('button.text-primary').textContent.trim();
+      return tituloA.localeCompare(tituloB);
+    });
+
+    notas.forEach(function (nota) {
+      notasContainer.appendChild(nota);
+    });
+  });
+
+  document.getElementById('ordenarActualizado').addEventListener('click', function () {
+    var notasContainer = document.getElementById('notasContainer');
+    var notas = Array.from(notasContainer.getElementsByClassName('nota'));
+
+    // Ordenar las notas de mayor a menor según su ID
+    notas.sort(function (a, b) {
+      var idA = parseInt(a.getAttribute('id'));
+      var idB = parseInt(b.getAttribute('id'));
+      return idB - idA; // Ordena de mayor a menor según el ID
+    });
+
+    // Limpiar el contenedor antes de mostrar las notas ordenadas
+    notasContainer.innerHTML = '';
+
+    // Agregar las notas ordenadas de nuevo al contenedor
+    notas.forEach(function (nota) {
+      notasContainer.appendChild(nota);
+    });
+  });
+
+  document.getElementById('btnCompartir').addEventListener('click', function(event) {
+    event.preventDefault(); // Evita que se envíe el formulario
+
+    var url = window.location.href; // Obtiene la URL actual de la página
+    navigator.clipboard.writeText(url).then(function() {
+      alert('¡Enlace copiado al portapapeles!');
+    }).catch(function(err) {
+      console.error('Error al copiar el enlace: ', err);
+    });
+  });
+
+  document.getElementById('admin').addEventListener('click', function(event) {
+    event.preventDefault(); // Evita que se envíe el formulario
+    alert('¡Funcionalidad aún no implementada!');
+  });
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
